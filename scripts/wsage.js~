@@ -1,82 +1,43 @@
 $(function(){
-    var map, coordenadas = "";
+    var map;
+    var poligono;
+    var coordenadas = "";
     var vetorCoordenadas;
-    var heatmap, testData;
-    var lol, geocoder, controls;  
+    var heatmap;
+    var geocoder;
+    var controls;
+    var mapLayers;  
 });
-
 
 // Carrega o 1º mapa
 function init() {
-    var lonlat = new OpenLayers.LonLat(-58.6324594,-15.7956343).transform('EPSG:4326', 'EPSG:3857');
-
-    polygonLayer = new OpenLayers.Layer.Vector("Mostrar Poligono");
-    poligono = new OpenLayers.Control.DrawFeature(polygonLayer, OpenLayers.Handler.Polygon);
-
-    map.addControl(new OpenLayers.Control.LayerSwitcher());
-    map.addControl(new OpenLayers.Control.MousePosition()); 
-
-    map = new OpenLayers.Map('map', projection: 'EPSG:3857', center: lonlat });
-
-    map.addLayers([
-            new OpenLayers.Layer.Google(
-                "Google Hybrid",
-                {type: google.maps.MapTypeId.HYBRID, numZoomLevels: 20}
-            ),
-            new OpenLayers.Layer.Google(
-                "Google Physical",
-                {type: google.maps.MapTypeId.TERRAIN}
-            ),
-            new OpenLayers.Layer.Google(
-                "Google Streets", // the default
-                {numZoomLevels: 20}
-            ), 
-            new OpenLayers.Layer.Google(
-                "Google Satellite",
-                {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
-            ),
-            polygonLayer
-        ]);
-
-    controls = {polygon: new OpenLayers.Control.DrawFeature(polygonLayer, OpenLayers.Handler.Polygon)} 
-
-    for(var key in controls) {
-         map.addControl(controls[key]);
-    } 
-
-    map.zoomTo(4);
-    poligono.activate();
-   //console.log("para debug: "+polygonLayer.renderer.extent);
+    criaMapa();
 }
 
-// captura região desenhada e converte em Polygon ou Multipolygon
-function preencheCamposCoordenadas(){
-    try{
-        var coordenadaPoligono = "",
-            tamPolygon = polygonLayer.features.length;
 
-        if(tamPolygon > 1){
-            var multipolygon = "";
+// botão de nova busca
+function novaBusca(){
+    $('#map').html("");
+    criaMapa();
+}
+   
+// envia polígono desenhado por AJAX para a classe de consulta ao BD.
+function enviaDados() {
+    $('#map').html('');
+    preencheCamposCoordenadas();
+    var dados = 'poligono='+$('#poligono').val()+'&submitted='+$('#submitted').val(); 
 
-            for(var i = 0; i < tamPolygon; i++){
-                coordenadaPoligono = polygonLayer.features[i].geometry + "";
-                multipolygon += coordenadaPoligono;
-            }
-
-            multipolygon = multipolygon.replace(/polygon/gi, ",");
-            multipolygon = multipolygon.replace(",","");
-            multipolygon = "MULTIPOLYGON("+multipolygon+")";
-            multipolygon.split("{",1);
-            $('#poligono').val(multipolygon);
-        }
-        else{
-            coordenadaPoligono = polygonLayer.features[0].geometry + "";
-            coordenadaPoligono.split("{",1);
-            $('#poligono').val(coordenadaPoligono);
-        }
-    } catch(e){
-        console.log(e);
-    }   
+    $.ajax({                 
+        type: 'POST',                 
+        //dataType: 'json',                 
+        url: 'consultaPoligono.php',                 
+        async: true,                 
+        data: dados,                 
+        success: function(response) {
+            $("#pontos").attr('value',response);
+            carregaPontosMapa();                 
+        }             
+    });       
 }
 
 // Carrega os pontos retornados do banco no 2º mapa
@@ -88,25 +49,28 @@ function carregaPontosMapa() {
         ultimoPoligono,
         coordenadasDesenhadas,
         tCoordenadas,
-        patternPolygon = /POLYGON(?=.)/,
-        coordenadas = "", 
+        patternPolygon = /POLYGON(?=.)/, 
         polygonList = [],
         pointList = [],
         multipolygon = [],
         poligonoPostGis = $('#poligono').val(),
         source = new Array(), 
         arrayDeCoord = new Array(), 
-        lonlat = new OpenLayers.LonLat(-58.6324594,-15.7956343).transform('EPSG:4326', 'EPSG:3857'),   
         vector = new OpenLayers.Layer.Vector('multiPolygon'),
         poi = new OpenLayers.Layer.Markers( "Markers" ),
         size = new OpenLayers.Size(15,15),
         offset = new OpenLayers.Pixel(-(size.w/2), -size.h),
         icon = new OpenLayers.Icon('scripts/img/marker.png',size, offset);
 
+    criaMapa();
+
     tCoordenadas = $("#pontos").val();
     
+    //separação em 2 arrays, um pros pontos outro pros pdf's
+    var arrayPontoPDF = tCoordenadas.split("&&&");
+
     if(tCoordenadas != undefined && tCoordenadas != ""){
-        coordenadas = JSON.parse($("#pontos").val());
+        coordenadas = JSON.parse(arrayPontoPDF[0]);
     }
 
     //inicio redesenho do polígono no 2º mapa
@@ -228,54 +192,133 @@ function carregaPontosMapa() {
                 }
             );            
         });
+        heatMap(coordenadas, arrayPontoPDF[1]);
     }
+
+    mapLayers[mapLayers.length] = vector;
+    mapLayers[mapLayers.length] = poi;
+    map.addLayers(mapLayers);
+}
+
+
+// Funcao para ativar e desativar o poligono.
+function activePolygonDraw(active) {
+    if(active == 0){
+        poligono.deactivate();
+    }else{
+        poligono.activate();
+    }
+} 
+
+function criaMapa(){
+    geocoder = new google.maps.Geocoder();
+   
+    //Requisitando ao openlayer para criar um mapa.
+    map = new OpenLayers.Map('map')
+   
+    //Definindo os mapas que seram exibidos.
+    polygonLayer = new OpenLayers.Layer.Vector("Mostrar Poligono");
+
+    mapLayers=[
+        new OpenLayers.Layer.Google(
+            "Google Hybrid",
+            {type: google.maps.MapTypeId.HYBRID, numZoomLevels: 20}
+        ),
+        new OpenLayers.Layer.Google(
+            "Google Physical",
+            {type: google.maps.MapTypeId.TERRAIN}
+        ),
+        new OpenLayers.Layer.Google(
+            "Google Streets", // the default
+            {numZoomLevels: 20}
+        ), 
+        new OpenLayers.Layer.Google(
+            "Google Satellite",
+            {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
+        ),
+        polygonLayer
+    ];
+
+    map.addLayers(mapLayers);
+
+    //Adicionando os controles, vai permitir desenhar o poligono.
+    poligono = new OpenLayers.Control.DrawFeature(polygonLayer, OpenLayers.Handler.Polygon); 
+    map.addControl(new OpenLayers.Control.LayerSwitcher());
+    map.addControl(new OpenLayers.Control.MousePosition()); 
+    map.addControl(poligono);
+
+
+    //Fazendo o mapa iniciar no Brasil
+    var lonlat = new OpenLayers.LonLat(-58.6324594,-15.7956343).transform('EPSG:4326', 'EPSG:3857');
+    map.setCenter(lonlat, 4); 
+}
+
+
+// captura região desenhada e converte em Polygon ou Multipolygon
+function preencheCamposCoordenadas(){
+    try{
+        var coordenadaPoligono = "",
+            tamPolygon         = polygonLayer.features.length;
+
+        if(tamPolygon > 1){
+            var multipolygon = "";
+
+            for(var i = 0; i < tamPolygon; i++){
+                coordenadaPoligono = polygonLayer.features[i].geometry + "";
+                multipolygon += coordenadaPoligono;
+            }
+
+            multipolygon = multipolygon.replace(/polygon/gi, ",");
+            multipolygon = multipolygon.replace(",","");
+            multipolygon = "MULTIPOLYGON("+multipolygon+")";
+            multipolygon.split("{",1);
+            $('#poligono').val(multipolygon);
+        }
+        else{
+            coordenadaPoligono = polygonLayer.features[0].geometry + "";
+            coordenadaPoligono.split("{",1);
+            $('#poligono').val(coordenadaPoligono);
+        }
+    } catch(e){
+        console.log(e);
+    }   
+}
+
+function heatMap(coordenadas, arrayPDF){ 
+    var arrayData = [];
+
+    $.each(coordenadas , function(i){
+        arrayData[i] = {count: arrayPDF[i], lat: coordenadas[i].st_y,  lng: coordenadas[i].st_x, count: arrayPDF[i]};
+    });    
     
-    map2.addLayers([
-            new OpenLayers.Layer.Google(
-                "Google Hybrid",
-                {type: google.maps.MapTypeId.HYBRID, numZoomLevels: 20}
-            ),
-            new OpenLayers.Layer.Google(
-                "Google Physical",
-                {type: google.maps.MapTypeId.TERRAIN}
-            ),
-            new OpenLayers.Layer.Google(
-                "Google Streets", // the default
-                {numZoomLevels: 20}
-            ), 
-            new OpenLayers.Layer.Google(
-                "Google Satellite",
-                {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
-            ),
-            vector, 
-            poi
-        ]);
+    //map3 = new google.maps.Map(document.getElementById("heatmapArea"), myOptions);
+    //heatmap = new HeatmapOverlay(map3, {"radius":40, "visible":true, "opacity":95});
+    
+    testData={
+        max: 46,
+        data: arrayData
+    };
 
-    map2.zoomTo(4);
-   //console.log("para debug: "+polygonLayer.features[0].geometry.getBounds()); 
-}
+    var transformedTestData = { max: testData.max , data: [] },
+        data = testData.data,
+        datalen = data.length,
+        nudata = [];
+ 
+    // in order to use the OpenLayers Heatmap Layer we have to transform our data into 
+    // { max: , data: [{lonlat: , count: },...]}
+    while(datalen--){
+        nudata.push({
+            lonlat: new OpenLayers.LonLat(data[datalen].lng, data[datalen].lat),
+            count: data[datalen].count
+        });
+    }
+    transformedTestData.data = nudata;
 
-// envia polígono desenhado por AJAX para a classe de consulta ao BD.
-function enviaDados() {
-    $('#map2').html('');
-    preencheCamposCoordenadas();
-    var dados = 'poligono='+$('#poligono').val()+'&submitted='+$('#submitted').val(); 
+    var layer = new OpenLayers.Layer.OSM();
+    var heatmap = new OpenLayers.Layer.Heatmap( "Heatmap Layer", map, layer, {visible: true, radius:40}, {isBaseLayer: false, opacity: 0.95, projection: new OpenLayers.Projection("EPSG:4326")});
+    
+    mapLayers[mapLayers.length] = layer;
+    mapLayers[mapLayers.length] = heatmap;
 
-    $.ajax({                 
-        type: 'POST',                 
-        //dataType: 'json',                 
-        url: 'consultaPoligono.php',                 
-        async: true,                 
-        data: dados,                 
-        success: function(response) {
-            $("#pontos").attr('value',response);
-            carregaPontosMapa();                 
-        }             
-    });       
-}
-
-// botão de nova busca
-function novaBusca(){
-    $('#map').html("");
-    criaMapa();
+    heatmap.setDataSet(transformedTestData);
 }

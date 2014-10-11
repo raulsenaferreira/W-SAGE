@@ -1,5 +1,5 @@
 <?php
-	include 'conexao.php';
+	
 	
 	$params = "";
 	// Montagem da query e envio dos dados
@@ -54,15 +54,17 @@
 			$query = "SELECT ST_X(geom), ST_Y(geom) from alunos_rural WHERE ST_Intersects(geom,ST_Transform(ST_GeomFromText('".$poligono."',3857),4326))".$params.";";
 		} 
 		else {
-			$query = "SELECT ST_X(geom), ST_Y(geom) from alunos_rural WHERE latitude != 0".$params.";";
+			$query = "SELECT ST_X(geom), ST_Y(geom) from alunos_rural WHERE latitude != 0 ".$params.";";
 		}
 
-		$result = pg_query($query);
-		$JSON = json_encode(pg_fetch_all($result));
+		exec('python cgi-bin/teste3.py "'.$query.'"' , $dataFromPython);
 		
-		pg_free_result($result);
-		// seta variável de envio como TRUE
-		$sent = true;
-		print_r($JSON);
+		if(empty($dataFromPython)){
+			print_r("python não carregou");
+		}
+		else{
+			print_r(json_encode($dataFromPython));
+		}
 	}
+	
 ?>
