@@ -525,7 +525,9 @@ img.olTileImage {
 #pontos{
     display: none;
 }
-
+#pdfs{
+    display: none;
+}
 #heatmapArea {
     position:relative;
     float:left;
