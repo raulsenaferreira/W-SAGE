@@ -1,0 +1,40 @@
+[Sun Oct 12 10:53:43 2014] [error] [client 80.82.78.87] File does not exist: /home/admin/web/default.domain/public_html/admin
+[Sun Oct 12 11:13:28 2014] [error] [client 177.52.160.17] script '/home/admin/web/default.domain/public_html/wp-cron.php' not found or unable to stat
+[Sun Oct 12 13:31:53 2014] [error] [client 222.186.57.75] File does not exist: /home/admin/web/default.domain/public_html/manager
+[Sun Oct 12 13:40:44 2014] [error] [client 117.21.191.206] File does not exist: /home/admin/web/default.domain/public_html/manager
+[Sun Oct 12 13:51:17 2014] [error] [client 117.21.191.206] File does not exist: /home/admin/web/default.domain/public_html/manager
+[Sun Oct 12 14:10:34 2014] [error] [client 177.192.127.187] File does not exist: /home/admin/web/default.domain/public_html/wsage
+[Sun Oct 12 14:10:34 2014] [error] [client 177.192.127.187] File does not exist: /home/admin/web/default.domain/public_html/favicon.ico
+[Sun Oct 12 14:20:15 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: naturalidade in /home/admin/web/default.domain/public_html/source.php on line 4, referer: http://107.170.124.51/
+[Sun Oct 12 14:20:32 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: fem in /home/admin/web/default.domain/public_html/consultaPoligono.php on line 8, referer: http://107.170.124.51/
+[Sun Oct 12 14:20:32 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: mas in /home/admin/web/default.domain/public_html/consultaPoligono.php on line 9, referer: http://107.170.124.51/
+[Sun Oct 12 14:20:32 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: inativo in /home/admin/web/default.domain/public_html/consultaPoligono.php on line 11, referer: http://107.170.124.51/
+[Sun Oct 12 14:20:32 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: formado in /home/admin/web/default.domain/public_html/consultaPoligono.php on line 12, referer: http://107.170.124.51/
+[Sun Oct 12 14:20:32 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: cra_aluno in /home/admin/web/default.domain/public_html/consultaPoligono.php on line 13, referer: http://107.170.124.51/
+[Sun Oct 12 14:20:32 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: periodo_cronologico in /home/admin/web/default.domain/public_html/consultaPoligono.php on line 15, referer: http://107.170.124.51/
+[Sun Oct 12 14:20:32 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: naturalidade in /home/admin/web/default.domain/public_html/consultaPoligono.php on line 16, referer: http://107.170.124.51/
+[Sun Oct 12 14:20:32 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: fem in /home/admin/web/default.domain/public_html/consultaPDF.php on line 8, referer: http://107.170.124.51/
+[Sun Oct 12 14:20:32 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: mas in /home/admin/web/default.domain/public_html/consultaPDF.php on line 9, referer: http://107.170.124.51/
+[Sun Oct 12 14:20:32 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: inativo in /home/admin/web/default.domain/public_html/consultaPDF.php on line 11, referer: http://107.170.124.51/
+[Sun Oct 12 14:20:32 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: formado in /home/admin/web/default.domain/public_html/consultaPDF.php on line 12, referer: http://107.170.124.51/
+[Sun Oct 12 14:20:32 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: cra_aluno in /home/admin/web/default.domain/public_html/consultaPDF.php on line 13, referer: http://107.170.124.51/
+[Sun Oct 12 14:20:32 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: periodo_cronologico in /home/admin/web/default.domain/public_html/consultaPDF.php on line 15, referer: http://107.170.124.51/
+[Sun Oct 12 14:20:32 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: naturalidade in /home/admin/web/default.domain/public_html/consultaPDF.php on line 16, referer: http://107.170.124.51/
+[Sun Oct 12 14:37:59 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: naturalidade in /home/admin/web/default.domain/public_html/wsage/source.php on line 4, referer: http://107.170.124.51/wsage/
+[Sun Oct 12 14:38:20 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: fem in /home/admin/web/default.domain/public_html/wsage/consultaPoligono.php on line 8, referer: http://107.170.124.51/wsage/
+[Sun Oct 12 14:38:20 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: mas in /home/admin/web/default.domain/public_html/wsage/consultaPoligono.php on line 9, referer: http://107.170.124.51/wsage/
+[Sun Oct 12 14:38:20 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: inativo in /home/admin/web/default.domain/public_html/wsage/consultaPoligono.php on line 11, referer: http://107.170.124.51/wsage/
+[Sun Oct 12 14:38:20 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: formado in /home/admin/web/default.domain/public_html/wsage/consultaPoligono.php on line 12, referer: http://107.170.124.51/wsage/
+[Sun Oct 12 14:38:20 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: cra_aluno in /home/admin/web/default.domain/public_html/wsage/consultaPoligono.php on line 13, referer: http://107.170.124.51/wsage/
+[Sun Oct 12 14:38:20 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: periodo_cronologico in /home/admin/web/default.domain/public_html/wsage/consultaPoligono.php on line 15, referer: http://107.170.124.51/wsage/
+[Sun Oct 12 14:38:20 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: naturalidade in /home/admin/web/default.domain/public_html/wsage/consultaPoligono.php on line 16, referer: http://107.170.124.51/wsage/
+[Sun Oct 12 14:38:20 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: fem in /home/admin/web/default.domain/public_html/wsage/consultaPDF.php on line 8, referer: http://107.170.124.51/wsage/
+[Sun Oct 12 14:38:20 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: mas in /home/admin/web/default.domain/public_html/wsage/consultaPDF.php on line 9, referer: http://107.170.124.51/wsage/
+[Sun Oct 12 14:38:20 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: inativo in /home/admin/web/default.domain/public_html/wsage/consultaPDF.php on line 11, referer: http://107.170.124.51/wsage/
+[Sun Oct 12 14:38:20 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: formado in /home/admin/web/default.domain/public_html/wsage/consultaPDF.php on line 12, referer: http://107.170.124.51/wsage/
+[Sun Oct 12 14:38:20 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: cra_aluno in /home/admin/web/default.domain/public_html/wsage/consultaPDF.php on line 13, referer: http://107.170.124.51/wsage/
+[Sun Oct 12 14:38:20 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: periodo_cronologico in /home/admin/web/default.domain/public_html/wsage/consultaPDF.php on line 15, referer: http://107.170.124.51/wsage/
+[Sun Oct 12 14:38:20 2014] [error] [client 177.192.127.187] PHP Notice:  Undefined index: naturalidade in /home/admin/web/default.domain/public_html/wsage/consultaPDF.php on line 16, referer: http://107.170.124.51/wsage/
+[Sun Oct 12 14:39:50 2014] [error] [client 177.192.127.187] Directory index forbidden by Options directive: /home/admin/web/default.domain/public_html/
+[Sun Oct 12 14:46:38 2014] [error] [client 107.22.153.161] Directory index forbidden by Options directive: /home/admin/web/default.domain/public_html/
+[Sun Oct 12 14:46:38 2014] [error] [client 107.22.153.161] File does not exist: /home/admin/web/default.domain/public_html/clientaccesspolicy.xml
