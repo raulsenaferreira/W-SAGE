@@ -1,10 +1,10 @@
 <?php
 
-$host = '107.170.124.51';
-$port = '5432';
-$database = 'tccdb_cloud';
-$user = 'postgres';
-$password = 'raul$0128$raul';
+$host = 'host';
+$port = 'porta';
+$database = 'banco';
+$user = 'usuario';
+$password = 'senha';
 
 $connectString = 'host=' . $host . ' port=' . $port . ' dbname=' . $database . 
 	' user=' . $user . ' password=' . $password;
