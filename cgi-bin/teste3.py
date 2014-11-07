@@ -56,7 +56,7 @@ def recuperaArrayPDF(kernel, values):
 	for j in range(len(values[0])):
 		ind = np.vstack([values[0][j], values[1][j]])
 		kdepdf = kernel.evaluate(ind)
-		arrayPDF.append(kdepdf * 50) #grandeza do pdf, equivale ao parametro do matlab, se la vale 3 entao aqui vale 3000
+		arrayPDF.append(kdepdf * 500) #grandeza do pdf, equivale ao parametro do matlab, se la vale 3 entao aqui vale 3000
 	return arrayPDF
 
 def json_list(list):

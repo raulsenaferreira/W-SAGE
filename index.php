@@ -133,13 +133,11 @@
 					<div class="page-header">
 						<h1> Gráficos </h1>
 					</div>
-
+					
 					<div id="chart1" >
 
 					</div>
-					<div id="chart2" >
-
-					</div>
+					<canvas id="myChart" width="400" height="400"></canvas>
 				</div>
 
 				<div id="page3">
@@ -160,10 +158,8 @@
 		<script async type="text/javascript" src="scripts/heatmap-gmaps.js"></script>
 		<script type="text/javascript" src="scripts/heatmap-openlayers.js"></script>
 		<script async type="text/javascript" src="scripts/wsage.js"></script>
-		<!--<script type="text/javascript" src="scripts/d3.min.js"></script>
 		<script type="text/javascript" src="scripts/smoothScroll.js"></script>
-		<script type="text/javascript" src="scripts/wsage_chart.js"></script>
-		<script type="text/javascript" src="scripts/wsage_chart2.js"></script>-->
+		<script type="text/javascript" src="scripts/Chart.js"></script>
 	</body>
 </html>
 

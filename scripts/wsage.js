@@ -8,7 +8,7 @@ $(function(){
     var controls;
     var mapLayers; 
     var testPDF;
-    preencheNaturalidade();
+    //preencheNaturalidade();
 });
 
 // Carrega o 1º mapa
@@ -124,6 +124,8 @@ function carregaPontosMapa() {
     
     if(tCoordenadas != undefined && tCoordenadas != ""){
         coordenadas = JSON.parse(tCoordenadas);
+        //chart
+        drawChart(coordenadas);
     }
 
     //inicio redesenho do polígono no 2º mapa
@@ -379,10 +381,39 @@ function heatMap(coordenadas, pdfs){
     transformedTestData.data = nudata;
 
     var layer = new OpenLayers.Layer.OSM();
-    var heatmap = new OpenLayers.Layer.Heatmap( "Heatmap Layer", map, layer, {visible: true, radius:32}, {isBaseLayer: false, opacity: 100, projection: new OpenLayers.Projection("EPSG:4326")});
+    var heatmap = new OpenLayers.Layer.Heatmap( "Heatmap Layer", map, layer, {visible: true, radius:20}, {isBaseLayer: false, opacity: 100, projection: new OpenLayers.Projection("EPSG:4326")});
     
     mapLayers[mapLayers.length] = layer;
     mapLayers[mapLayers.length] = heatmap;
 
     heatmap.setDataSet(transformedTestData);
+}
+
+
+//chart
+function drawChart(loldata){
+    var data = [
+    {
+        value: 300,
+        color:"#F7464A",
+        highlight: "#FF5A5E",
+        label: "Red"
+    },
+    {
+        value: 50,
+        color: "#46BFBD",
+        highlight: "#5AD3D1",
+        label: "Green"
+    },
+    {
+        value: 100,
+        color: "#FDB45C",
+        highlight: "#FFC870",
+        label: "Yellow"
+    }
+]
+    // For a pie chart
+    var ctx = $("#myChart").get(0).getContext("2d");
+    var myPieChart = new Chart(ctx).Pie(data);
+
 }

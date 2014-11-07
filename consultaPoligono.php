@@ -28,6 +28,12 @@
 		if($ativo != "" && $inativo != "" && $formado != "") {
 			$params .= " OR situacao = '".$ativo."' OR situacao = '".$inativo."' OR situacao = '".$formado."'";
 		}
+		else if($ativo != "" && $formado != ""){
+			$params .= " OR situacao = '".$ativo."' OR situacao = '".$formado."'";
+		}
+		else if($inativo != "" && $formado != ""){
+			$params .= " OR situacao = '".$inativo."' OR situacao = '".$formado."'";
+		}
 		else if($ativo != "") {
 			$params .= " AND situacao = '".$ativo."'";
 		}

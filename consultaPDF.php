@@ -1,5 +1,5 @@
 <?php
-	
+	include 'conexao.php';
 	
 	$params = "";
 	// Montagem da query e envio dos dados
@@ -27,6 +27,12 @@
 		}
 		if($ativo != "" && $inativo != "" && $formado != "") {
 			$params .= " OR situacao = '".$ativo."' OR situacao = '".$inativo."' OR situacao = '".$formado."'";
+		}
+		else if($ativo != "" && $formado != ""){
+			$params .= " OR situacao = '".$ativo."' OR situacao = '".$formado."'";
+		}
+		else if($inativo != "" && $formado != ""){
+			$params .= " OR situacao = '".$inativo."' OR situacao = '".$formado."'";
 		}
 		else if($ativo != "") {
 			$params .= " AND situacao = '".$ativo."'";

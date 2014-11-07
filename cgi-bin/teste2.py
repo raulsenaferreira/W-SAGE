@@ -50,17 +50,17 @@ def pegaLatLon(dataFromPHP):
 
 m1, m2 = pegaLatLon(dataFromPHP)
 
-#X, Y = np.mgrid[-180:180:100j, -90:90:100j]
+X, Y = np.mgrid[-180:180:100j, -90:90:100j]
 
-#positions = np.vstack([X.ravel(), Y.ravel()])
-values = np.vstack([m1, m2])
+values = np.vstack([X.ravel(), Y.ravel()]) #positions
+#values = np.vstack([m1, m2])
 kernel = scipy.stats.kde.gaussian_kde(values)
 
 def recuperaArrayPDF(kernel, values):
 	for j in range(len(values[0])):
 		ind = np.vstack([values[0][j], values[1][j]])
 		kdepdf = kernel.evaluate(ind)
-		arrayPDF.append(kdepdf * 2000) #grandeza do pdf, equivale ao parametro do matlab, se la vale 3 entao aqui vale 3000
+		arrayPDF.append(kdepdf) #grandeza do pdf, equivale ao parametro do matlab, se la vale 3 entao aqui vale 3000
 	return arrayPDF
 
 arrayPDF = recuperaArrayPDF(kernel, values)
