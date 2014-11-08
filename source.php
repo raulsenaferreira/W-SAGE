@@ -5,6 +5,7 @@
 	// Montagem da query e envio dos dados
 	if(isset($_POST['submitted'])) {
 
+		$tipoProcessamento = trim($_POST['tipoProcessamento']);
 		$fem = trim($_POST['fem']);
 		$mas = trim($_POST['mas']);
 		$ativo = trim($_POST['ativo']);
@@ -55,20 +56,41 @@
 		if($naturalidade != "") {
 			$params .= " AND naturalidade ilike '".$naturalidade."'";
 		}
-		// envia restrição do polígono caso este tenha sido desenhado no mapa
-		if(!empty($poligono)) {
-			$query = "SELECT ST_X(geom), ST_Y(geom) from alunos_rural WHERE ST_Intersects(geom,ST_Transform(ST_GeomFromText('".$poligono."',3857),4326))".$params.";";
-		} 
-		else {
-			$query = "SELECT ST_X(geom), ST_Y(geom) from alunos_rural WHERE latitude != 0".$params.";";
-		}
-
-		$result = pg_query($query);
-		$JSON = json_encode(pg_fetch_all($result));
 		
-		pg_free_result($result);
-		// seta variável de envio como TRUE
-		$sent = true;
-		print_r($JSON);
+		if($tipoProcessamento=='python'){
+			// envia restrição do polígono caso este tenha sido desenhado no mapa
+			if(!empty($poligono)) {
+				$query = "SELECT ST_X(geom), ST_Y(geom) from alunos_rural WHERE ST_Intersects(geom,ST_Transform(ST_GeomFromText('".$poligono."',3857),4326))".$params.";";
+			} 
+			else {
+				$query = "SELECT ST_X(geom), ST_Y(geom) from alunos_rural WHERE latitude != 0 ".$params.";";
+			}
+
+			exec('python cgi-bin/teste3.py "'.$query.'"' , $dataFromPython);
+			
+			if(empty($dataFromPython)){
+				print_r("python não carregou");
+			}
+			else{
+				print_r(json_encode($dataFromPython));
+			}
+		}
+		else if($tipoProcessamento=='php'){
+			// envia restrição do polígono caso este tenha sido desenhado no mapa
+			if(!empty($poligono)) {
+				$query = "SELECT ST_X(geom), ST_Y(geom), situacao, bolsista, nascimento, cra, naturalidade, cod_curso, sexo, forma_ingresso, campus from alunos_rural WHERE ST_Intersects(geom,ST_Transform(ST_GeomFromText('".$poligono."',3857),4326))".$params.";";
+			} 
+			else {
+				$query = "SELECT ST_X(geom), ST_Y(geom), situacao, bolsista, nascimento, cra, naturalidade, cod_curso, sexo, forma_ingresso, campus from alunos_rural WHERE latitude != 0".$params.";";
+			}
+
+			$result = pg_query($query);
+			$JSON = json_encode(pg_fetch_all($result));
+			
+			pg_free_result($result);
+			// seta variável de envio como TRUE
+			$sent = true;
+			print_r($JSON);
+		}
 	}
 ?>

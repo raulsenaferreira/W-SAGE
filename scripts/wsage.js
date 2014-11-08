@@ -8,6 +8,7 @@ $(function(){
     var controls;
     var mapLayers; 
     var testPDF;
+    var dump;//variável global usada para fins de inspeção
     //preencheNaturalidade();
 });
 
@@ -21,17 +22,10 @@ function novaBusca(){
     $('#map').html("");
     criaMapa();
 }
-//autocomplete de naturalidade
-function preencheNaturalidade(){
-    $.getJSON('source.php', function(data){
-        var naturalidades = [];
-         
-        $(data).each(function(key, value) {
-            naturalidades.push(value.naturalidade);
-        });
-         
-        $('.naturalidade').autocomplete({ source: naturalidades, minLength: 2});
-    });
+//ajax com todos os dados da consulta
+function preencheGraficos(){
+    
+    
 }
 /*função que percorre os filtros e verifica quais parâmetros estão marcados
  para ser usado na consulta */
@@ -65,27 +59,25 @@ function enviaDados() {
     $.ajax({                 
         type: 'POST',                 
         //dataType: 'json',                 
-        url: 'consultaPoligono.php',                 
+        url: 'source.php',                 
         async: true,                 
-        data: dados,                 
+        data: dados+"&tipoProcessamento=php",                 
         success: function(response) {
             $("#pontos").attr('value',response);
             //console.log(dados);
             enviaDadosPython(dados);
         }             
-    });
-
-           
+    });           
 }
 
 function enviaDadosPython(dados){
-    console.log(dados);
+    //console.log(dados);
     $.ajax({                 
         type: 'POST',                 
         //dataType: 'json',                 
-        url: 'consultaPDF.php',                 
+        url: 'source.php',//'consultaPDF.php',                 
         async: true,                 
-        data: dados,
+        data: dados+"&tipoProcessamento=python",
         success: function(response) {
             $("#pdfs").attr('value',response);
             //console.log(dados);
@@ -116,7 +108,7 @@ function carregaPontosMapa() {
         poi = new OpenLayers.Layer.Markers( "Markers" ),
         size = new OpenLayers.Size(15,15),
         offset = new OpenLayers.Pixel(-(size.w/2), -size.h),
-        icon = new OpenLayers.Icon('scripts/img/marker.png',size, offset);
+        icon = new OpenLayers.Icon('scripts/img/marker-blue.png',size, offset);
 
     criaMapa();
 
@@ -414,6 +406,24 @@ function drawChart(loldata){
 ]
     // For a pie chart
     var ctx = $("#myChart").get(0).getContext("2d");
-    var myPieChart = new Chart(ctx).Pie(data);
-
+    //var myPieChart = new Chart(ctx).Pie(data);
+    // Doughnut
+    //var myPieChart = new Chart(ctx).Doughnut(data);
+    //Polar
+    var myPieChart = new Chart(ctx).PolarArea(data);
+    //Radar
+    //var myPieChart = new Chart(ctx).Radar(data);
+    //Bar
+    //var myPieChart = new Chart(ctx).Bar(data);
 }
+
+
+// $.getJSON('source.php', function(data){
+    //     var naturalidades = [];
+         
+    //     $(data).each(function(key, value) {
+    //         naturalidades.push(value.naturalidade);
+    //     });
+         
+    //     $('.naturalidade').autocomplete({ source: naturalidades, minLength: 2});
+    // });
