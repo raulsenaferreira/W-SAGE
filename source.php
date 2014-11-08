@@ -3,55 +3,28 @@
 	
 	$params = "";
 	// Montagem da query e envio dos dados
-	if(isset($_POST['submitted'])) {
+	if(isset($_POST['submitted']) ) {
 
 		$tipoProcessamento = trim($_POST['tipoProcessamento']);
-		$fem = trim($_POST['fem']);
-		$mas = trim($_POST['mas']);
-		$ativo = trim($_POST['ativo']);
-		$inativo = trim($_POST['inativo']);
-		$formado = trim($_POST['formado']);
+		$sexo = trim($_POST['sexo']);
+		$situacao = trim($_POST['situacao']);
 		$cra_aluno = trim($_POST['cra_aluno']);
 		$cod_curso = trim($_POST['cod_curso']);
 		$periodo_cronologico = trim($_POST['periodo_cronologico']);
 		$naturalidade = trim($_POST['naturalidade']);
 		$poligono = trim($_POST['poligono']);
 
-		if($mas != "" && $fem != "") {
-			$params = " OR sexo = '".$mas."' OR sexo = '".$fem."'";
-		}
-		if($fem != "") {
-			$params = " AND sexo = '".$fem."'";
-		}
-		if($mas != "") {
-			$params = " AND sexo = '".$mas."'";
-		}
-		if($ativo != "" && $inativo != "" && $formado != "") {
-			$params .= " OR situacao = '".$ativo."' OR situacao = '".$inativo."' OR situacao = '".$formado."'";
-		}
-		else if($ativo != "" && $formado != ""){
-			$params .= " OR situacao = '".$ativo."' OR situacao = '".$formado."'";
-		}
-		else if($inativo != "" && $formado != ""){
-			$params .= " OR situacao = '".$inativo."' OR situacao = '".$formado."'";
-		}
-		else if($ativo != "") {
-			$params .= " AND situacao = '".$ativo."'";
-		}
-		else if($inativo != "") {
-			$params .= " AND situacao != '".$inativo."'";
-		}
-		else if($formado != "") {
-			$params .= " AND situacao = '".$formado."'";
-		}
-		if($cra_aluno != "") {
-			$params .= " AND cra >= '".$cra_aluno."'";
-		}
 		if($cod_curso != "") {
 			$params .= " AND cod_curso = '".$cod_curso."'";
 		}
-		if($periodo_cronologico != "") {
-			$params .= " AND periodo_cronologico = '".$periodo_cronologico."'";
+		if($sexo != "") {
+			$params .= " AND sexo = '".$sexo."'";
+		}
+		if($situacao != "") {
+			$params .= " AND situacao = '".$situacao."'";
+		}
+		if($cra_aluno != "") {
+			$params .= " AND cra >= '".$cra_aluno."'";
 		}
 		if($naturalidade != "") {
 			$params .= " AND naturalidade ilike '".$naturalidade."'";

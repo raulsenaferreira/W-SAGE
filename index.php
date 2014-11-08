@@ -94,22 +94,20 @@
 							      <div class="modal-body">
 							        <p>Você deseja buscar por&hellip;</p>
 							        <p>Sexo:
-								        <input type="checkbox" name="fem" value="F">Feminino
-								        <input type="checkbox" name="mas" value="M">Masculino
+								        <input type="radio" name="sexo" value="F">Feminino
+								        <input type="radio" name="sexo" value="M">Masculino
+								        <input type="radio" name="sexo" value="">Ambos
 							        </p>
 							        <p>Situação:
-								        <input type="checkbox" name="ativo" value="1">Ativo
-								        <input type="checkbox" name="inativo" value="1">Inativo
-								        <input type="checkbox" name="formado" value="6">Formado
+								        <input type="radio" name="situacao" value="1">Ativo
+								        <input type="radio" name="situacao" value="1">Inativo
+								        <input type="radio" name="situacao" value="6">Formado
 							        </p>
 							        <p class="texto">CR Acumulado acima de:
 							        	<input type="text" name="cra_aluno">
 							        </p>
 							        <p class="texto">Código do Curso:
-							        	<input type="text" name="cod_curso">
-							        </p>
-							        <p class="texto">Periodo Cronológico:
-							        	<input type="text" name="periodo_cronologico">
+							        	<input class="cod_curso" type="text" name="cod_curso">
 							        </p>
 							        <p class="texto">Naturalidade:
 							        	<input class="naturalidade" type="text" name="naturalidade">
@@ -117,7 +115,7 @@
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-							        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="enviaDados();">Buscar</button>
+							        <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="enviaDados();">Buscar</button>
 							      </div>
 							    </div><!-- /.modal-content -->
 							  </div><!-- /.modal-dialog -->
@@ -134,10 +132,9 @@
 						<h1> Gráficos </h1>
 					</div>
 					
-					<div id="chart1" >
+					<div id="genero"></div>
 
-					</div>
-					<canvas id="myChart" width="400" height="400"></canvas>
+					
 				</div>
 
 				<div id="page3">

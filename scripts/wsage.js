@@ -1,15 +1,17 @@
 $(function(){
     var map;
     var poligono;
-    var coordenadas = "";
     var vetorCoordenadas;
     var heatmap;
     var geocoder;
     var controls;
     var mapLayers; 
-    var testPDF;
-    var dump;//variável global usada para fins de inspeção
-    //preencheNaturalidade();
+    //variável global usada para fins de inspeção
+    var dump;
+    //autocomplete de codigo de curso
+    preencheCodCurso();
+    //charts
+    $("#grafico").on('click', drawChart());
 });
 
 // Carrega o 1º mapa
@@ -22,11 +24,7 @@ function novaBusca(){
     $('#map').html("");
     criaMapa();
 }
-//ajax com todos os dados da consulta
-function preencheGraficos(){
-    
-    
-}
+
 /*função que percorre os filtros e verifica quais parâmetros estão marcados
  para ser usado na consulta */
 function preencheFiltros(){
@@ -42,6 +40,18 @@ function preencheFiltros(){
     });
     //console.log(data['filtros']);
     return data['filtros'];
+}
+
+function preencheCodCurso () {
+    $.getJSON('scripts/cod_curso.js', function(data){
+        var cod_cursos = [];
+         
+        $(data).each(function(key, value) {
+            cod_cursos.push(value.cod_curso);
+        });
+         
+        $('.cod_curso').autocomplete({ source: cod_cursos, minLength: 1});
+    });
 }
 
 // envia polígono desenhado por AJAX para a classe de consulta ao BD.
@@ -83,9 +93,7 @@ function enviaDadosPython(dados){
             //console.log(dados);
             carregaPontosMapa();
         }             
-    });
-
-    
+    });  
 }
 
 // Carrega os pontos retornados do banco no 2º mapa
@@ -97,6 +105,7 @@ function carregaPontosMapa() {
         ultimoPoligono,
         coordenadasDesenhadas,
         tCoordenadas,
+        coordenadas = "",
         patternPolygon = /POLYGON(?=.)/, 
         polygonList = [],
         pointList = [],
@@ -116,8 +125,6 @@ function carregaPontosMapa() {
     
     if(tCoordenadas != undefined && tCoordenadas != ""){
         coordenadas = JSON.parse(tCoordenadas);
-        //chart
-        drawChart(coordenadas);
     }
 
     //inicio redesenho do polígono no 2º mapa
@@ -242,7 +249,6 @@ function carregaPontosMapa() {
         });
         
         var pdfs = JSON.parse($("#pdfs").val());
-        testPDF = pdfs;
         heatMap(coordenadas, pdfs);
     }
 
@@ -268,7 +274,8 @@ function criaMapa(){
     map = new OpenLayers.Map('map')
    
     //Definindo os mapas que seram exibidos.
-    polygonLayer = new OpenLayers.Layer.Vector("Mostrar Poligono");
+    polygonLayer = new OpenLayers.Layer.Vector("Mostrar Poligono", {
+        strategies:[new OpenLayers.Strategy.Cluster()]});
 
     mapLayers=[
         new OpenLayers.Layer.Google(
@@ -340,7 +347,7 @@ function preencheCamposCoordenadas(){
 }
 
 function heatMap(coordenadas, pdfs){ 
-    arrayData = [];
+    var arrayData = [];
 	var arrayPDF = JSON.parse(pdfs);
 	
     $.each(coordenadas , function(i){
@@ -352,7 +359,7 @@ function heatMap(coordenadas, pdfs){
     //map3 = new google.maps.Map(document.getElementById("heatmapArea"), myOptions);
     //heatmap = new HeatmapOverlay(map3, {"radius":40, "visible":true, "opacity":95});
     
-    testData={
+    var testData={
         max: 35,
         data: arrayData
     };
@@ -379,51 +386,64 @@ function heatMap(coordenadas, pdfs){
     mapLayers[mapLayers.length] = heatmap;
 
     heatmap.setDataSet(transformedTestData);
+
+    //chart
+    drawChart();
 }
 
 
 //chart
-function drawChart(loldata){
-    var data = [
-    {
-        value: 300,
-        color:"#F7464A",
-        highlight: "#FF5A5E",
-        label: "Red"
-    },
-    {
-        value: 50,
-        color: "#46BFBD",
-        highlight: "#5AD3D1",
-        label: "Green"
-    },
-    {
-        value: 100,
-        color: "#FDB45C",
-        highlight: "#FFC870",
-        label: "Yellow"
+function drawChart(){
+    var masculino = 0;
+    var feminino = 0;
+
+
+    var coordenadas = "";
+    var tCoordenadas = $("#pontos").val();
+    
+    if(tCoordenadas != undefined && tCoordenadas != ""){
+        coordenadas = JSON.parse(tCoordenadas);
     }
-]
+    if(coordenadas[0]){
+        $.each(coordenadas , function(i){
+            if (coordenadas[i].sexo=="M") {
+                //console.log(coordenadas[i].sexo);
+                masculino++;
+            }
+            else if (coordenadas[i].sexo=="F") {
+                //console.log(coordenadas[i].sexo);
+                feminino++;
+            } 
+        });
+    }
+    coordenadas="";
+    var sexo = [
+        {
+            value: masculino,
+            color:"#F7464A",
+            highlight: "#FF5A5E",
+            label: "Masculino"
+        },
+        {
+            value: feminino,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: "Feminino"
+        }
+    ]
+
+    var html='<h2>Gênero</h2><canvas id="graficoGenero" width="400" height="400"></canvas>';
+     $("#genero").html(html);               
     // For a pie chart
-    var ctx = $("#myChart").get(0).getContext("2d");
+    var ctx = $("#graficoGenero").get(0).getContext("2d");
+    var myPieChart = new Chart(ctx).Pie(sexo);
     //var myPieChart = new Chart(ctx).Pie(data);
     // Doughnut
     //var myPieChart = new Chart(ctx).Doughnut(data);
     //Polar
-    var myPieChart = new Chart(ctx).PolarArea(data);
+    //var myPieChart = new Chart(ctx).PolarArea(coordenadas);
     //Radar
     //var myPieChart = new Chart(ctx).Radar(data);
     //Bar
-    //var myPieChart = new Chart(ctx).Bar(data);
+    
 }
-
-
-// $.getJSON('source.php', function(data){
-    //     var naturalidades = [];
-         
-    //     $(data).each(function(key, value) {
-    //         naturalidades.push(value.naturalidade);
-    //     });
-         
-    //     $('.naturalidade').autocomplete({ source: naturalidades, minLength: 2});
-    // });
