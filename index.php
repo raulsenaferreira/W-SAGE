@@ -140,7 +140,7 @@
 					
 					<div id="genero" width="400" height="400"></div>
 					<div id="campus" width="400" height="400"></div>
-					
+					<div id="crm" width="400" height="400"></div>
 				</div>
 
 				<div id="page3">

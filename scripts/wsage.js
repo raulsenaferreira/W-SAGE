@@ -388,7 +388,6 @@ function heatMap(coordenadas, pdfs){
     drawChart();
 }
 
-
 //chart
 function drawChart(){
     var masculino = 0;
@@ -396,6 +395,9 @@ function drawChart(){
     var seropedica = 0;
     var ni = 0;
     var tr = 0;
+    var crm;
+    var crmMasculino = 0;
+    var crmFeminino = 0;
 
     var coordenadas = "";
     var tCoordenadas = $("#pontos").val();
@@ -406,9 +408,11 @@ function drawChart(){
     if(coordenadas[0]){
         $.each(coordenadas , function(i){
             if (coordenadas[i].sexo=="M") {
+                crmMasculino+=parseFloat(coordenadas[i].cra);
                 masculino++;
             }
             else if (coordenadas[i].sexo=="F") {
+                crmFeminino+=parseFloat(coordenadas[i].cra);
                 feminino++;
             }
             if (coordenadas[i].campus=="Seropédica") {
@@ -419,6 +423,9 @@ function drawChart(){
             }
             else if (coordenadas[i].campus=="Três Rios") {
                 tr++;
+            }
+            if(coordenadas[i].crm!=""){
+                crm = parseFloat(coordenadas[i].crm);
             }
         });
     }
@@ -448,7 +455,7 @@ function drawChart(){
     
 
     // Doughnut
-    var genero = [
+    var campus = [
         {
             value: seropedica,
             color:"#F7464A",
@@ -473,13 +480,35 @@ function drawChart(){
      $("#campus").html(html);               
     // For a pie chart
     var ctx = $("#graficoCampus").get(0).getContext("2d");
-    var myPieChart = new Chart(ctx).Doughnut(genero);
+    var myPieChart = new Chart(ctx).Doughnut(campus);
 
 
     //Polar
     //var myPieChart = new Chart(ctx).PolarArea(coordenadas);
     //Radar
     //var myPieChart = new Chart(ctx).Radar(data);
+    
+
     //Bar
+    crmMasculino = crmMasculino/masculino;
+    crmFeminino = crmFeminino/feminino;
+    var crMedio = {
+        labels: ["Curso", "Masculino", "Feminino"],
+        datasets: [
+            {
+                label: "CRM",
+                fillColor: "rgba(220,220,220,0.5)",
+                strokeColor: "rgba(220,220,220,0.8)",
+                highlightFill: "rgba(220,220,220,0.75)",
+                highlightStroke: "rgba(220,220,220,1)",
+                data: [crm.toFixed(2), crmMasculino.toFixed(2), crmFeminino.toFixed(2)]
+            }
+        ]
+    };
+    var html='<h2>CR Médio</h2><canvas id="graficoCrm" width="400" height="400"></canvas>';
+     $("#crm").html(html);               
+    // For a pie chart
+    var ctx = $("#graficoCrm").get(0).getContext("2d");
+    var myPieChart = new Chart(ctx).Bar(crMedio);
     
 }

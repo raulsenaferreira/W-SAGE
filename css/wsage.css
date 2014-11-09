@@ -99,6 +99,9 @@ body {
     float: right;
     width: 400px;
 }
+#grafh > #crm {
+    float: left;
+}
 .container > #page3 {
     clear: both;
 }
