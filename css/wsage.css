@@ -91,7 +91,17 @@ body {
 	list-style-type: none;
 }
 
-
+#grafh > #genero {
+    float: left;
+    width: 400px;
+}
+#grafh > #campus {
+    float: right;
+    width: 400px;
+}
+.container > #page3 {
+    clear: both;
+}
 
 body {
   font: 10px sans-serif;

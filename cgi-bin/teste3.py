@@ -23,7 +23,7 @@ except:
 
 # Connect to an existing database
 try:
-	conn = psycopg2.connect("host='107.170.124.51' dbname='tccdb_cloud' user='postgres' password='raul$0128$raul'")
+	conn = psycopg2.connect("host='host' dbname='banco' user='usuario' password='senha'")
 except:
 	print "Nao conectou!"
 # Open a cursor to perform database operations

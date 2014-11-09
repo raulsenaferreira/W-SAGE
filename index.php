@@ -103,10 +103,16 @@
 								        <input type="radio" name="situacao" value="1">Inativo
 								        <input type="radio" name="situacao" value="6">Formado
 							        </p>
+							        <p>Campus:
+								        <input type="radio" name="campus" value="Seropédica">Seropédica
+								        <input type="radio" name="campus" value="Nova Iguaçu">Nova Iguaçu
+								        <input type="radio" name="campus" value="Três Rios">Três Rios
+								        <input type="radio" name="campus" value="">Todos
+							        </p>
 							        <p class="texto">CR Acumulado acima de:
 							        	<input type="text" name="cra_aluno">
 							        </p>
-							        <p class="texto">Código do Curso:
+							        <p class="texto">Nome do Curso:
 							        	<input class="cod_curso" type="text" name="cod_curso">
 							        </p>
 							        <p class="texto">Naturalidade:
@@ -115,7 +121,7 @@
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-							        <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="enviaDados();">Buscar</button>
+							        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="enviaDados();">Buscar</button>
 							      </div>
 							    </div><!-- /.modal-content -->
 							  </div><!-- /.modal-dialog -->
@@ -132,8 +138,8 @@
 						<h1> Gráficos </h1>
 					</div>
 					
-					<div id="genero"></div>
-
+					<div id="genero" width="400" height="400"></div>
+					<div id="campus" width="400" height="400"></div>
 					
 				</div>
 

@@ -4,8 +4,8 @@
 	$params = "";
 	// Montagem da query e envio dos dados
 	if(isset($_POST['submitted']) ) {
-
 		$tipoProcessamento = trim($_POST['tipoProcessamento']);
+		$campus = trim($_POST['campus']);
 		$sexo = trim($_POST['sexo']);
 		$situacao = trim($_POST['situacao']);
 		$cra_aluno = trim($_POST['cra_aluno']);
@@ -22,6 +22,9 @@
 		}
 		if($situacao != "") {
 			$params .= " AND situacao = '".$situacao."'";
+		}
+		if($campus != "") {
+			$params .= " AND campus = '".$campus."'";
 		}
 		if($cra_aluno != "") {
 			$params .= " AND cra >= '".$cra_aluno."'";
@@ -51,10 +54,10 @@
 		else if($tipoProcessamento=='php'){
 			// envia restrição do polígono caso este tenha sido desenhado no mapa
 			if(!empty($poligono)) {
-				$query = "SELECT ST_X(geom), ST_Y(geom), situacao, bolsista, nascimento, cra, naturalidade, cod_curso, sexo, forma_ingresso, campus from alunos_rural WHERE ST_Intersects(geom,ST_Transform(ST_GeomFromText('".$poligono."',3857),4326))".$params.";";
+				$query = "SELECT ST_X(geom), ST_Y(geom), bolsista, nascimento, cra, naturalidade, cod_curso, sexo, forma_ingresso, campus from alunos_rural WHERE ST_Intersects(geom,ST_Transform(ST_GeomFromText('".$poligono."',3857),4326))".$params.";";
 			} 
 			else {
-				$query = "SELECT ST_X(geom), ST_Y(geom), situacao, bolsista, nascimento, cra, naturalidade, cod_curso, sexo, forma_ingresso, campus from alunos_rural WHERE latitude != 0".$params.";";
+				$query = "SELECT ST_X(geom), ST_Y(geom), bolsista, nascimento, cra, naturalidade, cod_curso, sexo, forma_ingresso, campus from alunos_rural WHERE latitude != 0".$params.";";
 			}
 
 			$result = pg_query($query);

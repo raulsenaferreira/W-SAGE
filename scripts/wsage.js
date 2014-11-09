@@ -10,8 +10,6 @@ $(function(){
     var dump;
     //autocomplete de codigo de curso
     preencheCodCurso();
-    //charts
-    $("#grafico").on('click', drawChart());
 });
 
 // Carrega o 1º mapa
@@ -85,7 +83,7 @@ function enviaDadosPython(dados){
     $.ajax({                 
         type: 'POST',                 
         //dataType: 'json',                 
-        url: 'source.php',//'consultaPDF.php',                 
+        url: 'source.php',                 
         async: true,                 
         data: dados+"&tipoProcessamento=python",
         success: function(response) {
@@ -274,8 +272,7 @@ function criaMapa(){
     map = new OpenLayers.Map('map')
    
     //Definindo os mapas que seram exibidos.
-    polygonLayer = new OpenLayers.Layer.Vector("Mostrar Poligono", {
-        strategies:[new OpenLayers.Strategy.Cluster()]});
+    polygonLayer = new OpenLayers.Layer.Vector("Mostrar Poligono");
 
     mapLayers=[
         new OpenLayers.Layer.Google(
@@ -396,7 +393,9 @@ function heatMap(coordenadas, pdfs){
 function drawChart(){
     var masculino = 0;
     var feminino = 0;
-
+    var seropedica = 0;
+    var ni = 0;
+    var tr = 0;
 
     var coordenadas = "";
     var tCoordenadas = $("#pontos").val();
@@ -407,17 +406,27 @@ function drawChart(){
     if(coordenadas[0]){
         $.each(coordenadas , function(i){
             if (coordenadas[i].sexo=="M") {
-                //console.log(coordenadas[i].sexo);
                 masculino++;
             }
             else if (coordenadas[i].sexo=="F") {
-                //console.log(coordenadas[i].sexo);
                 feminino++;
-            } 
+            }
+            if (coordenadas[i].campus=="Seropédica") {
+                seropedica++;
+            }
+            else if (coordenadas[i].campus=="Nova Iguaçu") {
+                ni++;
+            }
+            else if (coordenadas[i].campus=="Três Rios") {
+                tr++;
+            }
         });
     }
     coordenadas="";
-    var sexo = [
+
+
+    // For a pie chart
+    var genero = [
         {
             value: masculino,
             color:"#F7464A",
@@ -434,12 +443,39 @@ function drawChart(){
 
     var html='<h2>Gênero</h2><canvas id="graficoGenero" width="400" height="400"></canvas>';
      $("#genero").html(html);               
-    // For a pie chart
     var ctx = $("#graficoGenero").get(0).getContext("2d");
-    var myPieChart = new Chart(ctx).Pie(sexo);
-    //var myPieChart = new Chart(ctx).Pie(data);
+    var myPieChart = new Chart(ctx).Pie(genero);
+    
+
     // Doughnut
-    //var myPieChart = new Chart(ctx).Doughnut(data);
+    var genero = [
+        {
+            value: seropedica,
+            color:"#F7464A",
+            highlight: "#FF5A5E",
+            label: "Seropédica"
+        },
+        {
+            value: ni,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: "Nova Iguaçu"
+        },
+        {
+            value: tr,
+            color: "#FDB45C",
+            highlight: "#FFC870",
+            label: "Três Rios"
+        }
+    ]
+    
+    var html='<h2>Campus</h2><canvas id="graficoCampus" width="400" height="400"></canvas>';
+     $("#campus").html(html);               
+    // For a pie chart
+    var ctx = $("#graficoCampus").get(0).getContext("2d");
+    var myPieChart = new Chart(ctx).Doughnut(genero);
+
+
     //Polar
     //var myPieChart = new Chart(ctx).PolarArea(coordenadas);
     //Radar
