@@ -72,11 +72,8 @@ body {
 }
 
 .aviosMap{
-	margin-top: 10px; 
-	border-left: 6px solid #514ce0;
-	background-color: #dbd6ff;
+	background-color: transparent;
 	padding-top: 8px;
-	padding-bottom: 8px;
 }
 
 /*Grafico*/
