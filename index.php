@@ -1,171 +1,46 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="pt-BR">
-	<head>
-		<title>W-SAGE (Web tool for Spatial Analysis of GEodata)</title>
+<html class="bg-black" dir="ltr" lang="pt-BR">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>W-Sage | Login</title>
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Theme style -->
+        <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
+    </head>
 
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-	    <meta name="apple-mobile-web-app-capable" content="yes">
-	     
-		<link href="css/default.css" rel="stylesheet" type="text/css" />
-		<link href="css/style.css" rel="stylesheet" type="text/css" />
-		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-		<link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css" />
-		<link href="css/wsage.css" rel="stylesheet" type="text/css" />
-		
-	</head>
-
-	<body onload="init()" role="document">
-		<div  id="top" class="navbar navbar-default navbar-fixed-top" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<img src="imagens/wsage_logo.jpg" alt="Wsage-Logo" id="wsageLogo"> 
-				</div>
-				<div id="nav">
-				     <ul class="nav navbar-nav">
-				         <li class="navBarLiClass"><a class="navBarLinkClass" 
-				         	 href="#visualization" style="border-left: 1px solid #EEEEEE;">Mapa</a></li>
-				         <li class="navBarLiClass"><a class="navBarLinkClass" href="#grafh">Gráfico</a></li>
-				         <li class="navBarLiClass"><a class="navBarLinkClass" href="#contact">Contato</a></li>
-				     </ul>
-				</div>
-			</div>			
+    <body class="bg-black">
+    	<div id="fundo"><img src="World_Night_Lights_Map.jpg"></div>
+    	<div class="loginHeader"><h2>W-SAGE</h2></div>
+    	<div id="login" class="dialog">
+    		<form method="post" class="panel-body" action="login.php">
+    			<input type="hidden" name="submitted" id="submitted" value="true" />
+    			<fieldset>
+    				<div class="field">
+    					<label for="email">Email</label>
+    					<input type="email" tabindex="1" placeholder="email" name="email" id="email" class="text">
+    				</div>
+    				<div class="field">
+    					<label for="password">Senha</label>
+    					<input type="password" tabindex="2" placeholder="senha" name="senha" id="password" class="text password">
+    				</div>
+				</fieldset>
+				<fieldset class="submit">
+					<p><a href="/account/password/reset">Resetar Senha</a></p>
+					<input type="submit" value="Entrar" tabindex="3" name="commit" class="submit">
+				</fieldset>
+			</form>
 		</div>
-		<div>
-		<div id="content" class="bs-docs-header" role="main">
-			<div class="container">
-				<div id="visualization">
-					<a id="visualization"></a>
-					<div class="page-header" style="padding-top: 60px;">
-						<h1> Mapa </h1>
-					</div>
-					
-					<div id="map"></div>
-					<!-- botões de busca -->
-					<ul id="mapMenu" class="listaSemMarcador">
-						<li class="liButtonMap"> 
-							<input type="button" class="btn btn-primary mapMenuButton" value="Buscar" 
-							       id="enviar" data-toggle="modal" data-target="#myModal"> 
-						</li>
-						<li class="liButtonMap" >
-							<input type="button" class="btn btn-primary mapMenuButton" value="Nova Busca" 
-								   id="reset" onclick="novaBusca();">
-						</li>
-						<li class="liButtonMap" onclick="activePolygonDraw(0);">
-							<div class="btn btn-primary mapMenuButton">
-								<input type="image" class="btn btn-primary imageButton" 
-								   src="imagens/hand.png" alt="Hand"/>
-							</div>
-						</li>
-						<li class="liButtonMap" onclick="activePolygonDraw(1);">
-							<div class="btn btn-primary  mapMenuButton">
-								<input type="image" class="imageButton" 
-								   src="imagens/polygon.png" alt="Polygon"/>
-							</div>
-						</li>
-					</ul>
+		<div class="margin text-center">
+	        <span>Entrar através do: </span>
+	        <br/>
+	        <button class="btn bg-light-blue btn-circle"><i class="fa fa-facebook"></i></button>
+	        <button class="btn bg-aqua btn-circle"><i class="fa fa-twitter"></i></button>
+	        <button class="btn bg-red btn-circle"><i class="fa fa-google-plus"></i></button>
+	    </div>
+        <script src="scripts/jquery-2.0.3.js" type="text/javascript"></script>
+        <script src="scripts/bootstrap.min.js" type="text/javascript"></script>
 
-					<div style="clear:both"></div>
-
-					<div class="well aviosMap">
-				    	<ul class="listaSemMarcador">
-				    		<li> Use o botão com a <img src="imagens/hand.png" style="width:15px;height:15px;"> para poder navegar no mapa. </li>
-				    		<li> Use o botão com o <img src="imagens/polygon.png" style="width:15px;height:15px;"> para conseguir desenhar um polígono no mapa.</li>
-				    		<li> Use o <i> shift</i> ou um duplo clique do mouse, para poder fechar o polígono.</li>
-				    	</ul>
-					</div>
-
-					<!-- guarda informaçoes dos pontos -->
-					<input id="pontos">
-					<input id="pdfs">
-					<!-- envio de dados para o banco -->
-					<form id="consultarPoligono" method="post" name="consultarPoligono"  action="">
-						<input id="poligono" type="hidden" name="poligono">
-						<input type="hidden" name="submitted" id="submitted" value="true" />
-						<div id="filtros">
-							<!-- MODAL -->
-							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-							  <div class="modal-dialog">
-							    <div class="modal-content">
-							      <div class="modal-header">
-							        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-							        <h4 class="modal-title">Escolha o filtro de busca</h4>
-							      </div>
-							      <div class="modal-body">
-							        <p>Você deseja buscar por&hellip;</p>
-							        <p>Sexo:
-								        <input type="radio" name="sexo" value="F">Feminino
-								        <input type="radio" name="sexo" value="M">Masculino
-								        <input type="radio" name="sexo" value="">Ambos
-							        </p>
-							        <p>Situação:
-								        <input type="radio" name="situacao" value="1">Ativo
-								        <input type="radio" name="situacao" value="1">Inativo
-								        <input type="radio" name="situacao" value="6">Formado
-							        </p>
-							        <p>Campus:
-								        <input type="radio" name="campus" value="Seropédica">Seropédica
-								        <input type="radio" name="campus" value="Nova Iguaçu">Nova Iguaçu
-								        <input type="radio" name="campus" value="Três Rios">Três Rios
-								        <input type="radio" name="campus" value="">Todos
-							        </p>
-							        <p class="texto">CR Acumulado acima de:
-							        	<input type="text" name="cra_aluno">
-							        </p>
-							        <p class="texto">Nome do Curso:
-							        	<input class="cod_curso" type="text" name="cod_curso">
-							        </p>
-							        <p class="texto">Naturalidade:
-							        	<input class="naturalidade" type="text" name="naturalidade">
-							        </p>
-							      </div>
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-							        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="enviaDados();">Buscar</button>
-							      </div>
-							    </div><!-- /.modal-content -->
-							  </div><!-- /.modal-dialog -->
-							</div><!-- /.modal -->
-							</div>
-					</form>						
-				</div>
-
-				
-
-				<div id="grafh">
-				  <a id="portfolio"></a>
-					<div class="page-header">
-						<h1> Gráficos </h1>
-					</div>
-					
-					<div id="genero" width="400" height="400"></div>
-					<div id="campus" width="400" height="400"></div>
-					<div id="crm" width="400" height="400"></div>
-				</div>
-
-				<div id="page3">
-				  <a id="contact"></a>
-				  <div class="page-header">
-					<h1> Contato </h1>
-				  </div>
-				    
-				</div>
-			</div>	
-		</div>
-		<script type="text/javascript" src="scripts/jquery-2.0.3.js"></script>
-		<script async type="text/javascript" src="scripts/jquery-ui.min.js"></script>
-	    <script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false" style=""></script>
-		<script type="text/javascript" src="scripts/OpenLayers.js"></script>
-		<script async type="text/javascript" src="scripts/bootstrap.min.js"></script>
-		<script type="text/javascript" src="scripts/heatmap.js"></script>
-		<script async type="text/javascript" src="scripts/heatmap-gmaps.js"></script>
-		<script type="text/javascript" src="scripts/heatmap-openlayers.js"></script>
-		<script async type="text/javascript" src="scripts/wsage.js"></script>
-		<script type="text/javascript" src="scripts/smoothScroll.js"></script>
-		<script type="text/javascript" src="scripts/Chart.js"></script>
-	</body>
+    </body>
 </html>
-
-
-
-

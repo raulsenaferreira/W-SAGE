@@ -10,6 +10,18 @@ $(function(){
     var dump;
     //autocomplete de codigo de curso
     preencheCodCurso();
+    //barra reorganizável
+    $(".connectedSortable").sortable({
+        placeholder: "sort-highlight",
+        connectWith: ".connectedSortable",
+        handle: ".box-header, .nav-tabs",
+        forcePlaceholderSize: true,
+        zIndex: 999999
+    }).disableSelection();
+    $(".connectedSortable .box-header, .connectedSortable .nav-tabs-custom").css("cursor", "move");
+    
+    //The Calender
+    $("#calendar").datepicker();
 });
 
 // Carrega o 1º mapa
@@ -448,7 +460,7 @@ function drawChart(){
         }
     ]
 
-    var html='<h2>Gênero</h2><canvas id="graficoGenero" width="400" height="400"></canvas>';
+    var html='<h2>Gênero</h2><canvas id="graficoGenero" width="250" height="250"></canvas>';
      $("#genero").html(html);               
     var ctx = $("#graficoGenero").get(0).getContext("2d");
     var myPieChart = new Chart(ctx).Pie(genero);
@@ -476,7 +488,7 @@ function drawChart(){
         }
     ]
     
-    var html='<h2>Campus</h2><canvas id="graficoCampus" width="400" height="400"></canvas>';
+    var html='<h2>Campus</h2><canvas id="graficoCampus" width="250" height="250"></canvas>';
      $("#campus").html(html);               
     // For a pie chart
     var ctx = $("#graficoCampus").get(0).getContext("2d");
@@ -505,10 +517,9 @@ function drawChart(){
             }
         ]
     };
-    var html='<h2>CR Médio</h2><canvas id="graficoCrm" width="400" height="400"></canvas>';
+    var html='<h2>CR Médio</h2><canvas id="graficoCrm" width="250" height="250"></canvas>';
      $("#crm").html(html);               
     // For a pie chart
     var ctx = $("#graficoCrm").get(0).getContext("2d");
     var myPieChart = new Chart(ctx).Bar(crMedio);
-    
 }
