@@ -13,24 +13,12 @@
 		$naturalidade = trim($_POST['naturalidade']);
 		$poligono = trim($_POST['poligono']);
 
-		if($cod_curso != "") {
-			$params .= " AND cod_curso = '".$cod_curso."'";
-		}
-		if($sexo != "") {
-			$params .= " AND sexo = '".$sexo."'";
-		}
-		if($situacao != "") {
-			$params .= " AND situacao = '".$situacao."'";
-		}
-		if($campus != "") {
-			$params .= " AND campus = '".$campus."'";
-		}
-		if($cra_aluno != "") {
-			$params .= " AND cra >= '".$cra_aluno."'";
-		}
-		if($naturalidade != "") {
-			$params .= " AND naturalidade ilike '".$naturalidade."'";
-		}
+		$params .= ($cod_curso!="") ? " AND cod_curso = '".$cod_curso."'" : "";
+		$params .= ($sexo!="") ? " AND sexo = '".$sexo."'" : "";
+		$params .= ($situacao!="") ? " AND situacao = '".$situacao."'" : "";
+		$params .= ($campus!="") ? " AND campus = '".$campus."'" : "";
+		$params .= ($cra_aluno!="") ? " AND cra_aluno = '".$cra_aluno."'" : "";
+		$params .= ($naturalidade!="") ? " AND naturalidade = '".$naturalidade."'" : "";
 		
 		if($tipoProcessamento=='python'){
 			// envia restrição do polígono caso este tenha sido desenhado no mapa
@@ -43,12 +31,7 @@
 
 			exec('python cgi-bin/teste3.py "'.$query.'"' , $dataFromPython);
 			
-			if(empty($dataFromPython)){
-				print_r("python não carregou");
-			}
-			else{
-				print_r(json_encode($dataFromPython));
-			}
+			echo (empty($dataFromPython)) ? "python não carregou" : json_encode($dataFromPython);
 		}
 		else if($tipoProcessamento=='php'){
 			// envia restrição do polígono caso este tenha sido desenhado no mapa
