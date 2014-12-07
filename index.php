@@ -5,13 +5,13 @@
         <title>W-Sage | Login</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <!-- Theme style -->
         <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
     </head>
 
     <body class="bg-black">
-    	<div id="fundo"><img src="World_Night_Lights_Map.jpg"></div>
+    	<div id="fundo"><img src="imagens/intro-bg.jpg"></div>
     	<div class="loginHeader"><h2>W-SAGE</h2></div>
     	<div id="login" class="dialog">
     		<form method="post" class="panel-body" action="login.php">

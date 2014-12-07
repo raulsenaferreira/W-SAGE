@@ -10,6 +10,7 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
     header('location:index.php');
 }
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,7 +28,7 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
         <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
         <link href="css/wsage.css" rel="stylesheet" type="text/css" />
         <!-- Font -->
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <!-- Ionicons -->
         <link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
     </head>
@@ -642,5 +643,6 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
         <script type="text/javascript" src="scripts/Chart.js"></script>
         <script type="text/javascript" src="scripts/raphael.min.js"></script>
         <script src="scripts/AdminLTE/app.js" type="text/javascript"></script>
+
     </body>
 </html>
