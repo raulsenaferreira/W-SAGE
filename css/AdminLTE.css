@@ -1439,7 +1439,7 @@ body > .header .logo .icon {
   padding: 5px 10px 5px 5px;
 }
 .box .box-body {
-  padding: 10px;
+  padding: 0 0 1px;
   -webkit-border-top-left-radius: 0;
   -webkit-border-top-right-radius: 0;
   -webkit-border-bottom-right-radius: 3px;
@@ -2205,10 +2205,11 @@ Component: timeline
   border-right-width: 0px;
 }
 .nav-tabs-custom > .nav-tabs > li.header {
-  font-weight: 400;
-  line-height: 35px;
-  padding: 0 10px;
-  font-size: 20px;
+  /*font-weight: 400;*/
+  line-height: 40px;
+  /*padding: 0 10px;*/
+  font-size: 16px;
+  margin-top: -5px;
   color: #444;
   cursor: default;
 }

@@ -43,7 +43,7 @@ body {
 
 #mapMenu{
     margin-bottom: 0;
-    margin-left: 150px;
+    /*margin-left: 150px;*/
     margin-top: 0;
     padding: 0;
 }
@@ -59,7 +59,7 @@ body {
     margin-top: 2px;
 }
 
-.mapMenuButton{
+.btn.btn-primary.mapMenuButton.imagem{
 	width: 100px;
 }
 

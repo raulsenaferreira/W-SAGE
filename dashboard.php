@@ -444,36 +444,38 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                         <!-- Custom tabs (Charts with tabs)-->
                             <div class="nav-tabs-custom">
                                 <!-- Tabs within a box -->
+                                
                                 <ul class="nav nav-tabs pull-right">
-                                    <li class="active">
-                                        <a href="#revenue-chart" data-toggle="tab">Gênero</a>
+                                    <li>
+                                        <a href="#revenue-chart">Gênero</a>
                                     </li>
                                     <li>
-                                        <a href="#sales-chart" data-toggle="tab">Campus</a>
+                                        <a href="#sales-chart">Campus</a>
                                     </li>
                                     <li>
-                                        <a href="#crm-chart" data-toggle="tab">Cr Médio</a>
+                                        <a href="#crm-chart">Cr Médio</a>
                                     </li>
-                                    <li>
-                                        <a href="#populacao-chart" data-toggle="tab">População</a>
-                                    </li>
+                                    <!-- <li>
+                                        <a href="#populacao-chart">População</a>
+                                    </li> -->
                                     <li class="pull-left header"><i class="fa fa-inbox"></i> Gráficos</li>
+                                    
                                 </ul>
                                 <div class="tab-content no-padding">
                                     
-                                    <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 250px;">
+                                    <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 270px;">
                                         <div id="genero" width="250" height="250"></div>
                                     </div>
 
-                                    <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 250px;">
+                                    <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 270px;">
                                         <div id="campus" width="250" height="250"></div>
                                     </div>
 
-                                    <div class="chart tab-pane" id="crm-chart" style="position: relative; height: 250px;">
+                                    <div class="chart tab-pane" id="crm-chart" style="position: relative; height: 270px;">
                                         <div id="crm" width="250" height="250"></div>
                                     </div>
 
-                                    <div class="chart tab-pane" id="populacao-chart" style="position: relative; height: 250px;">
+                                    <div class="chart tab-pane" id="populacao-chart" style="position: relative; height: 270px;">
                                         <div id="populacao" width="250" height="250"></div>
                                     </div>
 
@@ -540,7 +542,7 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                     <!-- botões de busca -->
                                     <ul id="mapMenu" class="listaSemMarcador">
                                         <li class="liButtonMap"> 
-                                            <input type="button" class="btn btn-primary mapMenuButton" value="Buscar" 
+                                            <input type="button" class="btn btn-primary mapMenuButton imagem" value="Buscar" 
                                                    id="enviar" data-toggle="modal" data-target="#myModal"> 
                                         </li>
                                         <li class="liButtonMap" >
@@ -548,16 +550,20 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                                    id="reset" onclick="novaBusca();">
                                         </li>
                                         <li class="liButtonMap" onclick="activePolygonDraw(0);">
-                                            <div class="btn btn-primary mapMenuButton">
+                                            <div class="btn btn-primary mapMenuButton imagem">
                                                 <input type="image" class="btn btn-primary imageButton" 
                                                    src="imagens/hand.png" alt="Hand"/>
                                             </div>
                                         </li>
                                         <li class="liButtonMap" onclick="activePolygonDraw(1);">
-                                            <div class="btn btn-primary  mapMenuButton">
-                                                <input type="image" class="imageButton" 
+                                            <div class="btn btn-primary mapMenuButton imagem">
+                                                <input type="image" class="btn btn-primary imageButton" 
                                                    src="imagens/polygon.png" alt="Polygon"/>
                                             </div>
+                                        </li>
+                                        <li class="liButtonMap"> 
+                                            <input type="button" class="btn btn-primary mapMenuButton" value="Salvar Consulta" 
+                                                   id="save" data-toggle="modal" data-target="#modalSave" onclick="salvarConsulta();"> 
                                         </li>
                                     </ul>
                                 </div>

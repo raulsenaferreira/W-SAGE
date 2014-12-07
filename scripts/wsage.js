@@ -22,6 +22,9 @@ $(function(){
     
     //The Calender
     $("#calendar").datepicker();
+
+    //Gráficos
+    $(".nav-tabs-custom").tabs();
 });
 
 // Carrega o 1º mapa
@@ -280,10 +283,10 @@ function activePolygonDraw(active) {
 function criaMapa(){
     geocoder = new google.maps.Geocoder();
    
-    //Requisitando ao openlayer para criar um mapa.
+    //Requisitando o openlayers para criar um mapa.
     map = new OpenLayers.Map('map')
    
-    //Definindo os mapas que seram exibidos.
+    //Definindo os mapas que serão exibidos.
     polygonLayer = new OpenLayers.Layer.Vector("Mostrar Poligono");
 
     mapLayers=[
@@ -291,18 +294,18 @@ function criaMapa(){
             "Google Hybrid",
             {type: google.maps.MapTypeId.HYBRID, numZoomLevels: 20}
         ),
-        new OpenLayers.Layer.Google(
-            "Google Physical",
-            {type: google.maps.MapTypeId.TERRAIN}
-        ),
+        // new OpenLayers.Layer.Google(
+        //     "Google Physical",
+        //     {type: google.maps.MapTypeId.TERRAIN}
+        // ),
         new OpenLayers.Layer.Google(
             "Google Streets", // the default
             {numZoomLevels: 20}
         ), 
-        new OpenLayers.Layer.Google(
-            "Google Satellite",
-            {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
-        ),
+        // new OpenLayers.Layer.Google(
+        //     "Google Satellite",
+        //     {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
+        // ),
         polygonLayer
     ];
 
@@ -364,9 +367,6 @@ function heatMap(coordenadas, pdfs){
         arrayData[i] = {lat: coordenadas[i].st_y,  lng: coordenadas[i].st_x, count: arrayPDF[i]};//arrayPDF[i]
         //console.log(arrayPDF[i]);
     });    
-    
-    //map3 = new google.maps.Map(document.getElementById("heatmapArea"), myOptions);
-    //heatmap = new HeatmapOverlay(map3, {"radius":40, "visible":true, "opacity":95});
     
     var testData={
         max: 35,
@@ -460,7 +460,7 @@ function drawChart(){
         }
     ]
 
-    var html='<h2>Gênero</h2><canvas id="graficoGenero" width="250" height="250"></canvas>';
+    var html='<canvas id="graficoGenero" width="250" height="250"></canvas>';
      $("#genero").html(html);               
     var ctx = $("#graficoGenero").get(0).getContext("2d");
     var myPieChart = new Chart(ctx).Pie(genero);
@@ -488,7 +488,7 @@ function drawChart(){
         }
     ]
     
-    var html='<h2>Campus</h2><canvas id="graficoCampus" width="250" height="250"></canvas>';
+    var html='<canvas id="graficoCampus" width="250" height="250"></canvas>';
      $("#campus").html(html);               
     // For a pie chart
     var ctx = $("#graficoCampus").get(0).getContext("2d");
@@ -517,7 +517,7 @@ function drawChart(){
             }
         ]
     };
-    var html='<h2>CR Médio</h2><canvas id="graficoCrm" width="250" height="250"></canvas>';
+    var html='<canvas id="graficoCrm" width="250" height="250"></canvas>';
      $("#crm").html(html);               
     // For a pie chart
     var ctx = $("#graficoCrm").get(0).getContext("2d");
