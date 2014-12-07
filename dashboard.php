@@ -641,7 +641,6 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
         <script async type="text/javascript" src="scripts/wsage.js"></script>
         <script type="text/javascript" src="scripts/smoothScroll.js"></script>
         <script type="text/javascript" src="scripts/Chart.js"></script>
-        <script type="text/javascript" src="scripts/raphael.min.js"></script>
         <script src="scripts/AdminLTE/app.js" type="text/javascript"></script>
 
     </body>
