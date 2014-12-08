@@ -57,7 +57,7 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                 <span class="label label-success">4</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">You have 4 messages</li>
+                                <li class="header">Você tem 4 notificações</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
@@ -67,10 +67,10 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                                     <img src="imagens/avatar3.png" class="img-circle" alt="User Image"/>
                                                 </div>
                                                 <h4>
-                                                    Support Team
+                                                    Suporte
                                                     <small><i class="fa fa-clock-o"></i> 5 mins</small>
                                                 </h4>
-                                                <p>Why not buy a new awesome theme?</p>
+                                                <p>Mensagem bla bla</p>
                                             </a>
                                         </li><!-- end message -->
                                         <li>
@@ -79,10 +79,10 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                                     <img src="imagens/avatar2.png" class="img-circle" alt="user image"/>
                                                 </div>
                                                 <h4>
-                                                    AdminLTE Design Team
+                                                    Admin
                                                     <small><i class="fa fa-clock-o"></i> 2 hours</small>
                                                 </h4>
-                                                <p>Why not buy a new awesome theme?</p>
+                                                <p>Outra mensagem bla bla</p>
                                             </a>
                                         </li>
                                         <li>
@@ -91,10 +91,10 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                                     <img src="imagens/avatar.png" class="img-circle" alt="user image"/>
                                                 </div>
                                                 <h4>
-                                                    Developers
-                                                    <small><i class="fa fa-clock-o"></i> Today</small>
+                                                    Desenvolvedor
+                                                    <small><i class="fa fa-clock-o"></i> Hoje</small>
                                                 </h4>
-                                                <p>Why not buy a new awesome theme?</p>
+                                                <p>Mensagem mensagem</p>
                                             </a>
                                         </li>
                                         <li>
@@ -103,10 +103,10 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                                     <img src="imagens/avatar2.png" class="img-circle" alt="user image"/>
                                                 </div>
                                                 <h4>
-                                                    Sales Department
-                                                    <small><i class="fa fa-clock-o"></i> Yesterday</small>
+                                                    Zeca pimenta
+                                                    <small><i class="fa fa-clock-o"></i> Ontem</small>
                                                 </h4>
-                                                <p>Why not buy a new awesome theme?</p>
+                                                <p>ehuaheuahe</p>
                                             </a>
                                         </li>
                                         <li>
@@ -115,15 +115,15 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                                     <img src="imagens/avatar.png" class="img-circle" alt="user image"/>
                                                 </div>
                                                 <h4>
-                                                    Reviewers
-                                                    <small><i class="fa fa-clock-o"></i> 2 days</small>
+                                                    OI
+                                                    <small><i class="fa fa-clock-o"></i> 2 dias</small>
                                                 </h4>
-                                                <p>Why not buy a new awesome theme?</p>
+                                                <p>oi</p>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="footer"><a href="#">See All Messages</a></li>
+                                <li class="footer"><a href="#">Ver todas notificações</a></li>
                             </ul>
                         </li>
                         <!-- Notifications: style can be found in dropdown.less -->
@@ -133,39 +133,39 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                 <span class="label label-warning">10</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">You have 10 notifications</li>
+                                <li class="header">Você tem 10 notificações</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
                                         <li>
                                             <a href="#">
-                                                <i class="ion ion-ios7-people info"></i> 5 new members joined today
+                                                <i class="ion ion-ios7-people info"></i> 5 novos logs
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-warning danger"></i> Very long description here that may not fit into the page and may cause design problems
+                                                <i class="fa fa-warning danger"></i> descrição longa aqui
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-users warning"></i> 5 new members joined
+                                                <i class="fa fa-users warning"></i> 5 novas consultas
                                             </a>
                                         </li>
 
                                         <li>
                                             <a href="#">
-                                                <i class="ion ion-ios7-cart success"></i> 25 sales made
+                                                <i class="ion ion-ios7-cart success"></i> 25 consultas realizadas
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="ion ion-ios7-person danger"></i> You changed your username
+                                                <i class="ion ion-ios7-person danger"></i> Você alterou seu username
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="footer"><a href="#">View all</a></li>
+                                <li class="footer"><a href="#">Ver tudo</a></li>
                             </ul>
                         </li>
                         <!-- Tasks: style can be found in dropdown.less -->
@@ -175,19 +175,19 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                 <span class="label label-danger">9</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">You have 9 tasks</li>
+                                <li class="header">Você tem 9 tarefas</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
                                         <li><!-- Task item -->
                                             <a href="#">
                                                 <h3>
-                                                    Design some buttons
+                                                    Consultar por região
                                                     <small class="pull-right">20%</small>
                                                 </h3>
                                                 <div class="progress xs">
                                                     <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                        <span class="sr-only">20% Complete</span>
+                                                        <span class="sr-only">20% Completo</span>
                                                     </div>
                                                 </div>
                                             </a>
@@ -195,12 +195,12 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                         <li><!-- Task item -->
                                             <a href="#">
                                                 <h3>
-                                                    Create a nice theme
+                                                    Salvar consulta por campus
                                                     <small class="pull-right">40%</small>
                                                 </h3>
                                                 <div class="progress xs">
                                                     <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                        <span class="sr-only">40% Complete</span>
+                                                        <span class="sr-only">40% Completo</span>
                                                     </div>
                                                 </div>
                                             </a>
@@ -208,12 +208,12 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                         <li><!-- Task item -->
                                             <a href="#">
                                                 <h3>
-                                                    Some task I need to do
+                                                    Tarefas que preciso fazer
                                                     <small class="pull-right">60%</small>
                                                 </h3>
                                                 <div class="progress xs">
                                                     <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                        <span class="sr-only">60% Complete</span>
+                                                        <span class="sr-only">60% Completo</span>
                                                     </div>
                                                 </div>
                                             </a>
@@ -221,12 +221,12 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                         <li><!-- Task item -->
                                             <a href="#">
                                                 <h3>
-                                                    Make beautiful transitions
+                                                    Visualizar logs
                                                     <small class="pull-right">80%</small>
                                                 </h3>
                                                 <div class="progress xs">
                                                     <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                        <span class="sr-only">80% Complete</span>
+                                                        <span class="sr-only">80% Completo</span>
                                                     </div>
                                                 </div>
                                             </a>
@@ -234,7 +234,7 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                     </ul>
                                 </li>
                                 <li class="footer">
-                                    <a href="#">View all tasks</a>
+                                    <a href="#">Ver todas as tarefas</a>
                                 </li>
                             </ul>
                         </li>
@@ -242,27 +242,27 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="glyphicon glyphicon-user"></i>
-                                <span>Jane Doe <i class="caret"></i></span>
+                                <span>Admin <i class="caret"></i></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
-                                    <img src="imagens/avatar3.png" class="img-circle" alt="User Image" />
+                                    <img src="imagens/avatar.png" class="img-circle" alt="User Image" />
                                     <p>
-                                        Jane Doe - Web Developer
-                                        <small>Member since Nov. 2012</small>
+                                        Admin - Data Scientist
+                                        <small>Membro desde Dezembro</small>
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
                                 <li class="user-body">
                                     <div class="col-xs-4 text-center">
-                                        <a href="#">Followers</a>
+                                        <a href="#">menu 1</a>
                                     </div>
                                     <div class="col-xs-4 text-center">
-                                        <a href="#">Sales</a>
+                                        <a href="#">menu 2</a>
                                     </div>
                                     <div class="col-xs-4 text-center">
-                                        <a href="#">Friends</a>
+                                        <a href="#">menu 3</a>
                                     </div>
                                 </li>
                                 <!-- Menu Footer-->
@@ -288,10 +288,10 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="imagens/avatar3.png" class="img-circle" alt="User Image" />
+                            <img src="imagens/avatar.png" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
-                            <p>Hello, Jane</p>
+                            <p>Olá, Admin</p>
 
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
@@ -309,7 +309,7 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
                         <li class="active">
-                            <a href="index.html">
+                            <a href="index.php">
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
@@ -368,14 +368,14 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                         150
                                     </h3>
                                     <p>
-                                        New Orders
+                                        Ainda estou
                                     </p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-bag"></i>
                                 </div>
                                 <a href="#" class="small-box-footer">
-                                    More info <i class="fa fa-arrow-circle-right"></i>
+                                    Mais... <i class="fa fa-arrow-circle-right"></i>
                                 </a>
                             </div>
                         </div><!-- ./col -->
@@ -387,14 +387,14 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                         53<sup style="font-size: 20px">%</sup>
                                     </h3>
                                     <p>
-                                        Bounce Rate
+                                        decidindo
                                     </p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
                                 <a href="#" class="small-box-footer">
-                                    More info <i class="fa fa-arrow-circle-right"></i>
+                                    Mais... <i class="fa fa-arrow-circle-right"></i>
                                 </a>
                             </div>
                         </div><!-- ./col -->
@@ -406,14 +406,14 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                         44
                                     </h3>
                                     <p>
-                                        User Registrations
+                                        o que
                                     </p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-person-add"></i>
                                 </div>
                                 <a href="#" class="small-box-footer">
-                                    More info <i class="fa fa-arrow-circle-right"></i>
+                                    Mais... <i class="fa fa-arrow-circle-right"></i>
                                 </a>
                             </div>
                         </div><!-- ./col -->
@@ -425,14 +425,14 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                         65
                                     </h3>
                                     <p>
-                                        Unique Visitors
+                                        colocar aqui
                                     </p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-pie-graph"></i>
                                 </div>
                                 <a href="#" class="small-box-footer">
-                                    More info <i class="fa fa-arrow-circle-right"></i>
+                                    Mais... <i class="fa fa-arrow-circle-right"></i>
                                 </a>
                             </div>
                         </div><!-- ./col -->
@@ -496,7 +496,7 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
                                                 <li><a href="#">Adicionar</a></li>
                                                 <li><a href="#">Apagar</a></li>
                                                 <li class="divider"></li>
-                                                <li><a href="#">Ver Calendário</a></li>
+                                                <li><a href="#">Ver Anotações</a></li>
                                             </ul>
                                         </div>
                                         <button class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
