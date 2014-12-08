@@ -642,6 +642,6 @@ if ( !isset($_SESSION['email']) and !isset($_SESSION['senha']) ) {
         <script type="text/javascript" src="scripts/smoothScroll.js"></script>
         <script type="text/javascript" src="scripts/Chart.js"></script>
         <script src="scripts/AdminLTE/app.js" type="text/javascript"></script>
-
+        <script src="scripts/ol.js" type="text/javascript"></script>
     </body>
 </html>

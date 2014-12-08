@@ -3,11 +3,8 @@ $(function(){
     var poligono;
     var vetorCoordenadas;
     var heatmap;
-    var geocoder;
     var controls;
-    var mapLayers; 
-    //variável global usada para fins de inspeção
-    var dump;
+    var mapLayers;
     //autocomplete de codigo de curso
     preencheCodCurso();
     //barra reorganizável
@@ -19,9 +16,6 @@ $(function(){
         zIndex: 999999
     }).disableSelection();
     $(".connectedSortable .box-header, .connectedSortable .nav-tabs-custom").css("cursor", "move");
-    
-    //The Calender
-    $("#calendar").datepicker();
 
     //Gráficos
     $(".nav-tabs-custom").tabs();
@@ -38,8 +32,7 @@ function novaBusca(){
     criaMapa();
 }
 
-/*função que percorre os filtros e verifica quais parâmetros estão marcados
- para ser usado na consulta */
+//função que percorre os filtros e verifica quais parâmetros estão marcados para ser usado na consulta
 function preencheFiltros(){
     var data = { 'filtros' : []};
     $("#filtros input:checked").each(function() {
@@ -80,21 +73,20 @@ function enviaDados() {
     situacao; 
 
     $.ajax({                 
-        type: 'POST',                 
-        //dataType: 'json',                 
+        type: 'POST',                                  
         url: 'source.php',                 
         async: true,                 
         data: dados+"&tipoProcessamento=php",                 
         success: function(response) {
             $("#pontos").attr('value',response);
-            //console.log(dados);
+            
             enviaDadosPython(dados);
         }             
     });           
 }
 
 function enviaDadosPython(dados){
-    //console.log(dados);
+    
     $.ajax({                 
         type: 'POST',                 
         //dataType: 'json',                 
@@ -103,7 +95,7 @@ function enviaDadosPython(dados){
         data: dados+"&tipoProcessamento=python",
         success: function(response) {
             $("#pdfs").attr('value',response);
-            //console.log(dados);
+            
             carregaPontosMapa();
         }             
     });  
@@ -125,12 +117,7 @@ function carregaPontosMapa() {
         multipolygon = [],
         poligonoPostGis = $('#poligono').val(),
         source = new Array(), 
-        arrayDeCoord = new Array(), 
-        vector = new OpenLayers.Layer.Vector('multiPolygon'),
-        poi = new OpenLayers.Layer.Markers( "Markers" ),
-        size = new OpenLayers.Size(15,15),
-        offset = new OpenLayers.Pixel(-(size.w/2), -size.h),
-        icon = new OpenLayers.Icon('scripts/img/marker-blue.png',size, offset);
+        arrayDeCoord = new Array();
 
     criaMapa();
 
@@ -217,48 +204,107 @@ function carregaPontosMapa() {
         } 
     }
     else{
-        vector = new OpenLayers.Layer.Vector('multiPolygon');
+        vector = new OpenLayers.Layer.Vector('Poligono');
     }
     //fim redesenho do polígono no mapa
+
+    //Define 3 cores pra cada regra de cluster
+    var colors = {
+        low: "rgb(181, 226, 140)",
+        middle: "rgb(241, 211, 87)",
+        high: "rgb(253, 156, 115)"
+    };
+    //Define 3 regras de cluster.
+    var lowRule = new OpenLayers.Rule({
+            filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.LESS_THAN,
+            property: "count",
+            value: 15
+        }),
+        symbolizer: {
+            fillColor: colors.low,
+            fillOpacity: 0.9,
+            strokeColor: colors.low,
+            strokeOpacity: 0.5,
+            strokeWidth: 12,
+            pointRadius: 10,
+            label: "${count}",
+            labelOutlineWidth: 1,
+            fontColor: "#ffffff",
+            fontOpacity: 0.8,
+            fontSize: "12px"
+        }
+    });
+    var middleRule = new OpenLayers.Rule({
+        filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.BETWEEN,
+            property: "count",
+            lowerBoundary: 15,
+            upperBoundary: 50
+        }),
+        symbolizer: {
+            fillColor: colors.middle,
+            fillOpacity: 0.9,
+            strokeColor: colors.middle,
+            strokeOpacity: 0.5,
+            strokeWidth: 12,
+            pointRadius: 15,
+            label: "${count}",
+            labelOutlineWidth: 1,
+            fontColor: "#ffffff",
+            fontOpacity: 0.8,
+            fontSize: "12px"
+        }
+    });
+    var highRule = new OpenLayers.Rule({
+        filter: new OpenLayers.Filter.Comparison({
+            type: OpenLayers.Filter.Comparison.GREATER_THAN,
+            property: "count",
+            value: 50
+        }),
+        symbolizer: {
+            fillColor: colors.high,
+            fillOpacity: 0.9,
+            strokeColor: colors.high,
+            strokeOpacity: 0.5,
+            strokeWidth: 12,
+            pointRadius: 20,
+            label: "${count}",
+            labelOutlineWidth: 1,
+            fontColor: "#ffffff",
+            fontOpacity: 0.8,
+            fontSize: "12px"
+        }
+    });
+    //Cria estilo para as 3 regras criadas
+    var style = new OpenLayers.Style(null, {
+        rules: [lowRule, middleRule, highRule]
+    });
+
+    var vector2 = new OpenLayers.Layer.Vector("Pontos", {
+        renderers: ['Canvas','SVG'],
+        strategies: [
+            new OpenLayers.Strategy.AnimatedCluster({
+                distance: 45,
+                animationMethod: OpenLayers.Easing.Expo.easeOut,
+                animationDuration: 20
+            })
+        ],
+        styleMap: new OpenLayers.StyleMap(style)
+    });
+
     //inserindo pontos no mapa
+    var features = []
+
     if(coordenadas[0]){
         $.each(coordenadas , function(i){
             //atributos JSON
             latitude = coordenadas[i].st_y;
             longitude = coordenadas[i].st_x;
-            // var urlGoogle = "https://maps.google.com.br/maps?q="+latitude+","+longitude;
-            // var nome = coordenadas[i].name;
-            // var descricao = coordenadas[i].description;
-  
-            //marcador (pontos)
-            poi.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(longitude, latitude).transform('EPSG:4326', 'EPSG:3857'),icon.clone()));
-            /*poi.events.register(
-                'mousemove', 
-                poi, 
-                function(evt) {
-                    link = '<a href="'+urlGoogle+'" target="_blank"></a>';
-                    idElemento = this.markers[i].icon.imageDiv.attributes[0].nodeValue;
-                    elemento = $("#"+idElemento+" img");
-                    
-                    if ($("#"+idElemento+" a").length){
-                        //console.log("já tem link");
-                    }
-                    else{
-                        $(elemento).wrap(link);
-                        $(elemento).addClass("imagem");
-                        $(elemento).attr('data-title', nome);
-                        $(elemento).attr('data-html',true);
-                        $(elemento).attr('data-trigger',"hover");
-                        $(elemento).attr('data-delay',"{show: 500, hide: 100}"); 
-                        $(elemento).attr('data-placement',"left");
-                        $(elemento).attr('data-content',descricao);
-                        $(elemento).css("height","15px");
-                        $(elemento).css("width","15px");
-                        $(".imagem").popover();
-                        OpenLayers.Event.stop(evt); 
-                    }
-                }
-            );*/            
+
+            var lonlat=new OpenLayers.LonLat(longitude, latitude).transform('EPSG:4326', 'EPSG:3857')
+            var f = new OpenLayers.Feature.Vector( new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat));
+            features.push(f);          
         });
         
         var pdfs = JSON.parse($("#pdfs").val());
@@ -266,10 +312,10 @@ function carregaPontosMapa() {
     }
 
     mapLayers[mapLayers.length] = vector;
-    mapLayers[mapLayers.length] = poi;
+    mapLayers[mapLayers.length]=vector2;
     map.addLayers(mapLayers);
+    vector2.addFeatures(features);
 }
-
 
 // Funcao para ativar e desativar o poligono.
 function activePolygonDraw(active) {
@@ -281,38 +327,22 @@ function activePolygonDraw(active) {
 } 
 
 function criaMapa(){
-    geocoder = new google.maps.Geocoder();
-   
     //Requisitando o openlayers para criar um mapa.
     map = new OpenLayers.Map('map')
-   
+    vector = new OpenLayers.Layer.Vector('Poligono');
     //Definindo os mapas que serão exibidos.
-    polygonLayer = new OpenLayers.Layer.Vector("Mostrar Poligono");
-
     mapLayers=[
         new OpenLayers.Layer.Google(
             "Google Hybrid",
             {type: google.maps.MapTypeId.HYBRID, numZoomLevels: 20}
         ),
-        // new OpenLayers.Layer.Google(
-        //     "Google Physical",
-        //     {type: google.maps.MapTypeId.TERRAIN}
-        // ),
-        new OpenLayers.Layer.Google(
-            "Google Streets", // the default
-            {numZoomLevels: 20}
-        ), 
-        // new OpenLayers.Layer.Google(
-        //     "Google Satellite",
-        //     {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
-        // ),
-        polygonLayer
+        vector
     ];
 
     map.addLayers(mapLayers);
-
+    
     //Adicionando os controles, vai permitir desenhar o poligono.
-    poligono = new OpenLayers.Control.DrawFeature(polygonLayer, OpenLayers.Handler.Polygon); 
+    poligono = new OpenLayers.Control.DrawFeature(vector, OpenLayers.Handler.Polygon); 
     map.addControl(new OpenLayers.Control.LayerSwitcher());
     map.addControl(new OpenLayers.Control.MousePosition()); 
     map.addControl(poligono);
@@ -323,21 +353,20 @@ function criaMapa(){
     map.setCenter(lonlat, 4); 
 }
 
-
 // captura região desenhada e converte em Polygon ou Multipolygon
 function preencheCamposCoordenadas(){
     try{
         var coordenadaPoligono = "";
             
 
-        if(polygonLayer.features[0] != undefined){
-        	var tamPolygon = polygonLayer.features.length;
+        if(vector.features[0] != undefined){
+        	var tamPolygon = vector.features.length;
         	
         	if(tamPolygon > 1){
 		        var multipolygon = "";
 
 		        for(var i = 0; i < tamPolygon; i++){
-		            coordenadaPoligono = polygonLayer.features[i].geometry + "";
+		            coordenadaPoligono = vector.features[i].geometry + "";
 		            multipolygon += coordenadaPoligono;
 		        }
 
@@ -348,7 +377,7 @@ function preencheCamposCoordenadas(){
 		        $('#poligono').val(multipolygon);
 		    }
 		    else{
-		        coordenadaPoligono = polygonLayer.features[0].geometry + "";
+		        coordenadaPoligono = vector.features[0].geometry + "";
 		        coordenadaPoligono.split("{",1);
 		        $('#poligono').val(coordenadaPoligono);
 		    }
@@ -363,9 +392,7 @@ function heatMap(coordenadas, pdfs){
 	var arrayPDF = JSON.parse(pdfs);
 	
     $.each(coordenadas , function(i){
-    //console.log("pdf: "+arrayPDF);
-        arrayData[i] = {lat: coordenadas[i].st_y,  lng: coordenadas[i].st_x, count: arrayPDF[i]};//arrayPDF[i]
-        //console.log(arrayPDF[i]);
+        arrayData[i] = {lat: coordenadas[i].st_y,  lng: coordenadas[i].st_x, count: arrayPDF[i]};
     });    
     
     var testData={
@@ -378,7 +405,6 @@ function heatMap(coordenadas, pdfs){
         datalen = data.length,
         nudata = [];
  
-    // in order to use the OpenLayers Heatmap Layer we have to transform our data into 
     while(datalen--){
         nudata.push({
             lonlat: new OpenLayers.LonLat(data[datalen].lng, data[datalen].lat),
@@ -388,7 +414,11 @@ function heatMap(coordenadas, pdfs){
 
     transformedTestData.data = nudata;
 
-    var layer = new OpenLayers.Layer.OSM();
+    var layer = new OpenLayers.Layer.Google(
+            "Google Streets", 
+            {numZoomLevels: 20}
+        )
+    
     var heatmap = new OpenLayers.Layer.Heatmap( "Heatmap Layer", map, layer, {visible: true, radius:20}, {isBaseLayer: false, opacity: 100, projection: new OpenLayers.Projection("EPSG:4326")});
     
     mapLayers[mapLayers.length] = layer;
@@ -396,11 +426,11 @@ function heatMap(coordenadas, pdfs){
 
     heatmap.setDataSet(transformedTestData);
 
-    //chart
+    //grafico
     drawChart();
 }
 
-//chart
+//grafico
 function drawChart(){
     var masculino = 0;
     var feminino = 0;
@@ -417,7 +447,7 @@ function drawChart(){
     if(tCoordenadas != undefined && tCoordenadas != ""){
         coordenadas = JSON.parse(tCoordenadas);
     }
-    if(coordenadas[0]){
+    if(coordenadas[0] && coordenadas!=null){
         $.each(coordenadas , function(i){
             if (coordenadas[i].sexo=="M") {
                 crmMasculino+=parseFloat(coordenadas[i].cra);
@@ -443,7 +473,6 @@ function drawChart(){
     }
     coordenadas="";
 
-
     // For a pie chart
     var genero = [
         {
@@ -465,7 +494,6 @@ function drawChart(){
     var ctx = $("#graficoGenero").get(0).getContext("2d");
     var myPieChart = new Chart(ctx).Pie(genero);
     
-
     // Doughnut
     var campus = [
         {
@@ -494,13 +522,11 @@ function drawChart(){
     var ctx = $("#graficoCampus").get(0).getContext("2d");
     var myPieChart = new Chart(ctx).Doughnut(campus);
 
-
     //Polar
     //var myPieChart = new Chart(ctx).PolarArea(coordenadas);
     //Radar
     //var myPieChart = new Chart(ctx).Radar(data);
     
-
     //Bar
     crmMasculino = crmMasculino/masculino;
     crmFeminino = crmFeminino/feminino;
@@ -518,8 +544,9 @@ function drawChart(){
         ]
     };
     var html='<canvas id="graficoCrm" width="250" height="250"></canvas>';
-     $("#crm").html(html);               
-    // For a pie chart
+     $("#crm").html(html);
+
+    //pie chart
     var ctx = $("#graficoCrm").get(0).getContext("2d");
     var myPieChart = new Chart(ctx).Bar(crMedio);
 }

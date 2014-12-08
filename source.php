@@ -29,7 +29,7 @@
 				$query = "SELECT ST_X(geom), ST_Y(geom) from alunos_rural WHERE latitude != 0 ".$params.";";
 			}
 
-			exec('python cgi-bin/teste3.py "'.$query.'"' , $dataFromPython);
+			exec('python cgi-bin/kde.py "'.$query.'"' , $dataFromPython);
 			
 			echo (empty($dataFromPython)) ? "python não carregou" : json_encode($dataFromPython);
 		}
