@@ -11,7 +11,6 @@ data = cgi.FieldStorage()
 
 latitude = []
 longitude = []
-arrayPDF = []
 
 dataFromPHP = ""
 try:
@@ -22,7 +21,7 @@ except:
 
 #substitua com os dados do seu banco
 try:
-	conn = psycopg2.connect("host='host'  dbname='banco'  user='usuario'  password='senha'")
+	conn = psycopg2.connect("host='host' dbname='banco' user='usuario' password='senha'")
 except:
 	print "Nao conectou!"
 
@@ -44,32 +43,32 @@ def pegaLatLon(linhas):
 m1, m2 = pegaLatLon(linhas)
 
 values = np.vstack([m1, m2])
+
+tam = len(values[0])
+limite = range(tam)
+fator = 500 #Equivale a 5 no Matlab
+
+#Calculo do KDE
 kernel = scipy.stats.kde.gaussian_kde(values)
 
-limite = range(len(values[0]))
-tam = len(values[0])
-
+#Descomente o codigo abaixo se vc estiver usando uma maquina multicore e comente o codigo sequencial
+#Paralelo
+'''
 if tam < 1000:
 	numThreads = 1
 else:
-	numThreads = int(len(values[0])/1000)
+	numThreads = tam/1000
 
 def recuperaArrayPDFParalelo(j):
-	ind = np.vstack([values[0][j], values[1][j]])
-	kdepdf = kernel.evaluate(ind)
-	return kdepdf * 500
+	return kernel.evaluate(np.vstack([values[0][j], values[1][j]]))[0]*fator
 
-def paralelo():
-	return Parallel(n_jobs=numThreads, backend="threading")(delayed(recuperaArrayPDFParalelo)(j) for j in limite)
+print Parallel(n_jobs=numThreads, backend="threading")(delayed(recuperaArrayPDFParalelo)(j) for j in limite)
+'''
+#Sequencial
+def recuperaArrayPDF(kernel, values):
+	lst = []
+	for j in range(tam):
+		lst.append(kernel.evaluate(np.vstack([values[0][j], values[1][j]]))[0]*fator)
+	return lst
 
-def json_list(list):
-    lst = []
-    for pn in list:
-        d = {}
-        d=pn[0]
-        lst.append(round(d,2))
-    return lst
-
-resultado = paralelo()
-
-print json_list(resultado)
+print recuperaArrayPDF(kernel, values)

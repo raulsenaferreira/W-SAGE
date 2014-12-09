@@ -71,7 +71,7 @@ function enviaDados() {
     var dados = 'poligono='+$('#poligono').val()+
     '&submitted='+$('#submitted').val()+
     situacao; 
-
+    enviaDadosPython(dados);
     $.ajax({                 
         type: 'POST',                                  
         url: 'source.php',                 
@@ -80,7 +80,7 @@ function enviaDados() {
         success: function(response) {
             $("#pontos").attr('value',response);
             
-            enviaDadosPython(dados);
+            
         }             
     });           
 }
