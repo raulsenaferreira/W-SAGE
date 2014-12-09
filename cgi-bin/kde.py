@@ -22,7 +22,7 @@ except:
 
 #substitua com os dados do seu banco
 try:
-	conn = psycopg2.connect("host='host' dbname='banco' user='usuario' password='senha'")
+	conn = psycopg2.connect("host='host'  dbname='banco'  user='usuario'  password='senha'")
 except:
 	print "Nao conectou!"
 
