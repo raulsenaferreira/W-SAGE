@@ -20,6 +20,7 @@ except:
     print "ERROR"
     sys.exit(1)
 
+#substitua com os dados do seu banco
 try:
 	conn = psycopg2.connect("host='host' dbname='banco' user='usuario' password='senha'")
 except:
