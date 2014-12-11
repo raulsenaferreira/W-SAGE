@@ -529,7 +529,7 @@ function drawChart(){
     //var myPieChart = new Chart(ctx).Radar(data);
     
     //Bar
-    var count=0;
+    var count=0.0;
     for(indice in mapCrm){
         crm+=parseFloat(mapCrm[indice]);
         count++;
@@ -540,7 +540,7 @@ function drawChart(){
     crmFeminino = crmFeminino/feminino;
     
     var crMedio = {
-        labels: ["Curso", "Masculino", "Feminino"],
+        labels: ["Geral", "Masculino", "Feminino"],
         datasets: [
             {
                 label: "CRM",
