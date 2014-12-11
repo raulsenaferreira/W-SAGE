@@ -88,8 +88,7 @@ function enviaDados() {
 function enviaDadosPython(dados){
     
     $.ajax({                 
-        type: 'POST',                 
-        //dataType: 'json',                 
+        type: 'POST',                                  
         url: 'source.php',                 
         async: true,                 
         data: dados+"&tipoProcessamento=python",
@@ -432,14 +431,15 @@ function heatMap(coordenadas, pdfs){
 
 //grafico
 function drawChart(){
-    var masculino = 0;
-    var feminino = 0;
+    var mapCrm={};
+    var crm=0.0;
+    var masculino = 1;
+    var feminino = 1;
     var seropedica = 0;
     var ni = 0;
     var tr = 0;
-    var crm;
-    var crmMasculino = 0;
-    var crmFeminino = 0;
+    var crmMasculino = 0.0;
+    var crmFeminino = 0.0;
 
     var coordenadas = "";
     var tCoordenadas = $("#pontos").val();
@@ -448,12 +448,14 @@ function drawChart(){
         coordenadas = JSON.parse(tCoordenadas);
     }
     if(coordenadas[0] && coordenadas!=null){
+        
         $.each(coordenadas , function(i){
-            if (coordenadas[i].sexo=="M") {
+
+            if (coordenadas[i].sexo=="M" && (coordenadas[i].cra!="" && coordenadas[i].cra!=null)) {
                 crmMasculino+=parseFloat(coordenadas[i].cra);
                 masculino++;
             }
-            else if (coordenadas[i].sexo=="F") {
+            else if (coordenadas[i].sexo=="F" && (coordenadas[i].cra!="" && coordenadas[i].cra!=null)) {
                 crmFeminino+=parseFloat(coordenadas[i].cra);
                 feminino++;
             }
@@ -466,9 +468,8 @@ function drawChart(){
             else if (coordenadas[i].campus=="Três Rios") {
                 tr++;
             }
-            if(coordenadas[i].crm!=""){
-                crm = parseFloat(coordenadas[i].crm);
-            }
+            //pegar CR médio de forma genérica independente da consulta
+            mapCrm[coordenadas[i].campus]=coordenadas[i].crm;
         });
     }
     coordenadas="";
@@ -528,8 +529,16 @@ function drawChart(){
     //var myPieChart = new Chart(ctx).Radar(data);
     
     //Bar
+    var count=0;
+    for(indice in mapCrm){
+        crm+=parseFloat(mapCrm[indice]);
+        count++;
+    }
+    crm /= count;
+    
     crmMasculino = crmMasculino/masculino;
     crmFeminino = crmFeminino/feminino;
+    
     var crMedio = {
         labels: ["Curso", "Masculino", "Feminino"],
         datasets: [
